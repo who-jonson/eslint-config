@@ -1,0 +1,26 @@
+{
+  "name": "@whoj/eslint-config-vue",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Jonson B.",
+    "email": "www.jbc.bd@gmail.com",
+    "url": "https://github.com/who-jonson"
+  },
+  "packageManager": "pnpm@7.11.0",
+  "homepage": "https://github.com/who-jonson/eslint-config",
+  "main": "index.js",
+  "files": [
+    "index.js"
+  ],
+  "peerDependencies": {
+    "eslint": ">=8.22.0"
+  },
+  "dependencies": {
+    "@whoj/eslint-config-ts": "workspace:*",
+    "eslint-plugin-vue": "^9.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.22.0"
+  }
+}

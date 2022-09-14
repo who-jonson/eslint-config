@@ -1,0 +1,23 @@
+{
+  "name": "@whoj/eslint-config-monorepo",
+  "private": true,
+  "license": "MIT",
+  "author": {
+    "name": "Jonson B.",
+    "email": "www.jbc.bd@gmail.com",
+    "url": "https://github.com/who-jonson"
+  },
+  "packageManager": "pnpm@7.11.0",
+  "scripts": {
+    "lint": "eslint \"{**/*,*}.{js,ts,tsx,vue}\" --fix",
+    "prepare": "pnpm -r run stub",
+    "release": "bumpp packages/*/package.json --commit --push --tag && pnpm -r publish --access public"
+  },
+  "devDependencies": {
+    "@whoj/eslint-config": "*",
+    "bumpp": "^8.2.1",
+    "eslint": "^8.22.0",
+    "eslint-plugin-whoj": "workspace:*",
+    "typescript": "^4.8.3"
+  }
+}

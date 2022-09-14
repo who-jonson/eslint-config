@@ -1,0 +1,39 @@
+{
+  "name": "@whoj/eslint-config-basic",
+  "version": "0.0.0",
+  "license": "MIT",
+  "author": {
+    "name": "Jonson B.",
+    "email": "www.jbc.bd@gmail.com",
+    "url": "https://github.com/who-jonson"
+  },
+  "packageManager": "pnpm@7.11.0",
+  "homepage": "https://github.com/who-jonson/eslint-config",
+  "main": "index.js",
+  "files": [
+    "*.js"
+  ],
+  "scripts": {
+    "lint": "eslint . --config=index.js"
+  },
+  "peerDependencies": {
+    "eslint": ">=7.4.0"
+  },
+  "dependencies": {
+    "eslint-plugin-whoj": "workspace:*",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-html": "^7.1.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-jsonc": "^2.4.0",
+    "eslint-plugin-markdown": "^3.0.0",
+    "eslint-plugin-n": "^15.2.5",
+    "eslint-plugin-promise": "^6.0.1",
+    "eslint-plugin-unicorn": "^43.0.2",
+    "eslint-plugin-yml": "^1.1.0",
+    "jsonc-eslint-parser": "^2.1.0",
+    "yaml-eslint-parser": "^1.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.22.0"
+  }
+}

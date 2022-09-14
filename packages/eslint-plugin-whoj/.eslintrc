@@ -1,0 +1,6 @@
+{
+  "extends": "@whoj",
+  "plugins": [
+    "whoj"
+  ]
+}
