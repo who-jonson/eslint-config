@@ -187,13 +187,11 @@ module.exports = {
 
     // Common
     'semi': ['error', 'never'],
-    'curly': ['error', 'multi-or-nest', 'consistent'],
     'quotes': [2, 'single', { avoidEscape: true, allowTemplateLiterals: true }],
     'quote-props': ['error', 'consistent-as-needed'],
     'no-unused-vars': 'off',
     'no-param-reassign': 'off',
     'array-bracket-spacing': ['error', 'never'],
-    'brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
     'block-spacing': ['error', 'always'],
     'camelcase': 'off',
     'comma-spacing': ['error', { before: false, after: true }],

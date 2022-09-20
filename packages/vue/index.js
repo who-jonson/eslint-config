@@ -20,6 +20,7 @@ module.exports = {
   rules: {
     'vue/no-v-html': 'off',
     'vue/require-prop-types': 'off',
+    'vue/prefer-separate-static-class': 'off',
     'vue/prefer-import-from-vue': 'off',
 
     // reactivity transform
@@ -45,7 +46,6 @@ module.exports = {
     'vue/no-useless-v-bind': 'error',
     'vue/no-v-text-v-html-on-component': 'error',
     'vue/padding-line-between-blocks': ['error', 'always'],
-    'vue/prefer-separate-static-class': 'error',
 
     'vue/no-side-effects-in-computed-properties': 'off',
     'vue/jsx-uses-vars': 'error',

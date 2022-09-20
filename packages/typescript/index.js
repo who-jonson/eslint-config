@@ -16,11 +16,28 @@ module.exports = {
     'import/named': 'off',
 
     // TS
-    '@typescript-eslint/member-delimiter-style': ['error', { multiline: { delimiter: 'none' } }],
+    '@typescript-eslint/member-delimiter-style': ['error', {
+      multiline: {
+        delimiter: 'comma',
+        requireLast: true
+      },
+      singleline: {
+        delimiter: 'comma',
+        requireLast: true
+      },
+      overrides: {
+        interface: {
+          multiline: {
+            delimiter: 'semi',
+            requireLast: true
+          }
+        }
+      }
+    }],
     '@typescript-eslint/type-annotation-spacing': ['error', {}],
     '@typescript-eslint/consistent-type-imports': ['error', { prefer: 'type-imports', disallowTypeAnnotations: false }],
     '@typescript-eslint/consistent-type-definitions': ['error', 'interface'],
-    '@typescript-eslint/prefer-ts-expect-error': 'error',
+    '@typescript-eslint/prefer-ts-expect-error': 'off',
 
     // Override JS
     'no-useless-constructor': 'off',
@@ -66,7 +83,7 @@ module.exports = {
     '@typescript-eslint/no-redeclare': 'error',
     'no-use-before-define': 'off',
     'brace-style': 'off',
-    '@typescript-eslint/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
+    '@typescript-eslint/brace-style': 'warn',
     'comma-dangle': 'off',
     '@typescript-eslint/comma-dangle': ['error', 'never'],
     'object-curly-spacing': 'off',
