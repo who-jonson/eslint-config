@@ -7,7 +7,7 @@
     "email": "www.jbc.bd@gmail.com",
     "url": "https://github.com/who-jonson"
   },
-  "packageManager": "pnpm@7.11.0",
+  "packageManager": "pnpm@7.12.1",
   "homepage": "https://github.com/who-jonson/eslint-config",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
