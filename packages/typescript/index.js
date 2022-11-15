@@ -19,11 +19,11 @@ module.exports = {
     '@typescript-eslint/member-delimiter-style': ['error', {
       multiline: {
         delimiter: 'comma',
-        requireLast: true
+        requireLast: false
       },
       singleline: {
         delimiter: 'comma',
-        requireLast: true
+        requireLast: false
       },
       overrides: {
         interface: {
@@ -124,7 +124,7 @@ module.exports = {
     '@typescript-eslint/no-use-before-define': 'off',
     '@typescript-eslint/no-var-requires': 'off',
     '@typescript-eslint/consistent-indexed-object-style': 'off',
-    '@typescript-eslint/naming-convention': 'off',
+    // '@typescript-eslint/naming-convention': 'off',
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': 'off',
     '@typescript-eslint/no-explicit-any': 'off',
