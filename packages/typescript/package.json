@@ -7,22 +7,22 @@
     "email": "www.jbc.bd@gmail.com",
     "url": "https://github.com/who-jonson"
   },
-  "packageManager": "pnpm@7.12.1",
+  "packageManager": "pnpm@7.16.0",
   "homepage": "https://github.com/who-jonson/eslint-config",
   "main": "index.js",
   "files": [
     "index.js"
   ],
   "peerDependencies": {
-    "eslint": ">=8.22.0",
-    "typescript": ">=4.4"
+    "eslint": ">=8.25.0",
+    "typescript": ">=4.6"
   },
   "dependencies": {
-    "@whoj/eslint-config-basic": "workspace:*",
-    "@typescript-eslint/eslint-plugin": "^5.37.0",
-    "@typescript-eslint/parser": "^5.37.0"
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "@typescript-eslint/parser": "^5.43.0",
+    "@whoj/eslint-config-basic": "workspace:*"
   },
   "devDependencies": {
-    "eslint": "^8.22.0"
+    "eslint": "^8.27.0"
   }
 }

@@ -7,20 +7,20 @@
     "email": "www.jbc.bd@gmail.com",
     "url": "https://github.com/who-jonson"
   },
-  "packageManager": "pnpm@7.12.1",
+  "packageManager": "pnpm@7.16.0",
   "homepage": "https://github.com/who-jonson/eslint-config",
   "main": "index.js",
   "files": [
     "index.js"
   ],
   "peerDependencies": {
-    "eslint": ">=8.22.0"
+    "eslint": ">=8.25"
   },
   "dependencies": {
     "@whoj/eslint-config-ts": "workspace:*",
-    "eslint-plugin-vue": "^9.4.0"
+    "eslint-plugin-vue": "^9.7.0"
   },
   "devDependencies": {
-    "eslint": "^8.22.0"
+    "eslint": "^8.27.0"
   }
 }
