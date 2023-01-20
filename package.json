@@ -7,7 +7,7 @@
     "email": "www.jbc.bd@gmail.com",
     "url": "https://github.com/who-jonson"
   },
-  "packageManager": "pnpm@7.18.1",
+  "packageManager": "pnpm@7.25.1",
   "scripts": {
     "lint": "eslint \"{**/*,*}.{js,ts,tsx,vue}\" --fix",
     "prepare": "pnpm -r run stub",
@@ -16,7 +16,7 @@
   "devDependencies": {
     "@whoj/eslint-config": "*",
     "bumpp": "^8.2.1",
-    "eslint": "^8.29.0",
+    "eslint": "^8.32.0",
     "eslint-plugin-whoj": "workspace:*",
     "typescript": "^4.9.4"
   }
