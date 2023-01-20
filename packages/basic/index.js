@@ -10,8 +10,7 @@ module.exports = {
     'plugin:import/recommended',
     'plugin:eslint-comments/recommended',
     'plugin:jsonc/recommended-with-jsonc',
-    'plugin:yml/standard',
-    'plugin:markdown/recommended'
+    'plugin:yml/standard'
   ],
   ignorePatterns: [
     '*.min.*',
