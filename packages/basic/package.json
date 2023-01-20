@@ -31,10 +31,9 @@
     "eslint-plugin-whoj": "workspace:*",
     "eslint-plugin-yml": "^1.4.0",
     "jsonc-eslint-parser": "^2.1.0",
-    "mdast-util-from-markdown": "^1.2.0",
     "yaml-eslint-parser": "^1.1.0"
   },
   "devDependencies": {
-    "eslint": "^8.32.0"
+    "eslint": "^8.30.0"
   }
 }

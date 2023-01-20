@@ -23,6 +23,6 @@
     "@whoj/eslint-config-basic": "workspace:*"
   },
   "devDependencies": {
-    "eslint": "^8.32.0"
+    "eslint": "^8.30.0"
   }
 }

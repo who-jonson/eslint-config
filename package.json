@@ -16,7 +16,7 @@
   "devDependencies": {
     "@whoj/eslint-config": "*",
     "bumpp": "^8.2.1",
-    "eslint": "^8.32.0",
+    "eslint": "^8.30.0",
     "eslint-plugin-whoj": "workspace:*",
     "typescript": "^4.9.4"
   }
