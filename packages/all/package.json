@@ -16,8 +16,8 @@
     "eslint": ">=8.25.0"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.57.0",
-    "@typescript-eslint/parser": "^5.57.0",
+    "@typescript-eslint/eslint-plugin": "^5.58.0",
+    "@typescript-eslint/parser": "^5.58.0",
     "@whoj/eslint-config-vue": "workspace:*",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-html": "^7.1.0",
@@ -32,6 +32,6 @@
     "yaml-eslint-parser": "^1.2.0"
   },
   "devDependencies": {
-    "eslint": "^8.37.0"
+    "eslint": "^8.38.0"
   }
 }

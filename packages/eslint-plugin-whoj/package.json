@@ -7,7 +7,7 @@
     "email": "www.jbc.bd@gmail.com",
     "url": "https://github.com/who-jonson"
   },
-  "packageManager": "pnpm@8.1.0",
+  "packageManager": "pnpm@8.2.0",
   "homepage": "https://github.com/who-jonson/eslint-config",
   "main": "./dist/index.cjs",
   "module": "./dist/index.mjs",
@@ -22,10 +22,10 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "@typescript-eslint/utils": "^5.57.0"
+    "@typescript-eslint/utils": "^5.58.0"
   },
   "devDependencies": {
-    "unbuild": "^1.2.0",
+    "unbuild": "^1.2.1",
     "vitest": "^0.29.8"
   }
 }
