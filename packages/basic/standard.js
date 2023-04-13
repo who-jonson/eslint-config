@@ -149,7 +149,7 @@ module.exports = {
     'no-sequences': 'error',
     'no-shadow-restricted-names': 'error',
     'no-sparse-arrays': 'error',
-    'no-tabs': 'error',
+    'no-tabs': 'off',
     'no-template-curly-in-string': 'error',
     'no-this-before-super': 'error',
     'no-throw-literal': 'error',
@@ -168,7 +168,7 @@ module.exports = {
       allowTernary: true,
       allowTaggedTemplates: true
     }],
-    'no-unused-vars': ['error', {
+    'no-unused-vars': ['warn', {
       args: 'none',
       caughtErrors: 'none',
       ignoreRestSiblings: true,
@@ -180,7 +180,7 @@ module.exports = {
     'no-useless-constructor': 'error',
     'no-useless-escape': 'error',
     'no-useless-rename': 'error',
-    'no-useless-return': 'error',
+    'no-useless-return': 'warn',
     'no-void': 'error',
     'no-whitespace-before-property': 'error',
     'no-with': 'error',

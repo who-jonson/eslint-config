@@ -37,7 +37,7 @@ module.exports = {
   ],
   settings: {
     'import/resolver': {
-      node: { extensions: ['.js', '.mjs'] }
+      node: { extensions: ['.js', '.mjs', '.cjs'] }
     }
   },
   overrides: [
@@ -72,7 +72,6 @@ module.exports = {
           {
             pathPattern: '^$',
             order: [
-              'publisher',
               'name',
               'displayName',
               'type',
@@ -82,13 +81,6 @@ module.exports = {
               'description',
               'author',
               'license',
-              'funding',
-              'homepage',
-              'repository',
-              'bugs',
-              'keywords',
-              'categories',
-              'sideEffects',
               'exports',
               'main',
               'module',
@@ -96,12 +88,13 @@ module.exports = {
               'jsdelivr',
               'types',
               'typesVersions',
+              'files',
               'bin',
               'icon',
-              'files',
               'engines',
               'activationEvents',
               'contributes',
+              'publisher',
               'scripts',
               'peerDependencies',
               'peerDependenciesMeta',
@@ -114,7 +107,14 @@ module.exports = {
               'husky',
               'simple-git-hooks',
               'lint-staged',
-              'eslintConfig'
+              'eslintConfig',
+              'funding',
+              'homepage',
+              'repository',
+              'bugs',
+              'keywords',
+              'categories',
+              'sideEffects'
             ]
           },
           {
@@ -124,9 +124,13 @@ module.exports = {
           {
             pathPattern: '^exports.*$',
             order: [
+              'develop',
               'types',
+              'import',
               'require',
-              'import'
+              'node',
+              'browser',
+              'default'
             ]
           }
         ]

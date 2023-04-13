@@ -2,7 +2,7 @@ import { RuleTester } from '@typescript-eslint/utils/dist/ts-eslint';
 import { it } from 'vitest';
 import rule, { RULE_NAME } from './if-newline';
 
-const valids = [
+const valid = [
   `if (true)
   console.log('hello')
 `,
@@ -20,7 +20,7 @@ it('runs', () => {
   });
 
   ruleTester.run(RULE_NAME, rule, {
-    valid: valids,
+    valid,
     invalid: invalids.map(i => ({
       code: i[0],
       output: i[1],

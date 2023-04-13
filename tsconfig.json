@@ -1,6 +1,9 @@
 {
   "compilerOptions": {
-    "baseUrl": "."
+    "baseUrl": ".",
+    "target": "ES2022",
+    "downlevelIteration": true,
+    "moduleResolution": "Bundler"
   },
   "include": [
     "./packages/**/*.ts"
