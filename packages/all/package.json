@@ -7,17 +7,22 @@
     "email": "www.jbc.bd@gmail.com",
     "url": "https://github.com/who-jonson"
   },
+  "repository": {
+    "type": "git",
+    "directory": "packages/all",
+    "url": "https://github.com/who-jonson/eslint-config.git"
+  },
   "homepage": "https://github.com/who-jonson/eslint-config",
   "main": "index.js",
   "files": [
     "index.js"
   ],
   "peerDependencies": {
-    "eslint": ">=8"
+    "eslint": "^8.43.0"
   },
   "dependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.59.11",
-    "@typescript-eslint/parser": "^5.59.11",
+    "@typescript-eslint/eslint-plugin": "^5.60.0",
+    "@typescript-eslint/parser": "^5.60.0",
     "@whoj/eslint-config-vue": "workspace:*",
     "eslint-plugin-eslint-comments": "^3.2.0",
     "eslint-plugin-html": "^7.1.0",
@@ -26,12 +31,12 @@
     "eslint-plugin-n": "^16.0.0",
     "eslint-plugin-promise": "^6.1.1",
     "eslint-plugin-unicorn": "^47.0.0",
-    "eslint-plugin-vue": "^9.14.1",
+    "eslint-plugin-vue": "^9.15.0",
     "eslint-plugin-yml": "^1.8.0",
     "jsonc-eslint-parser": "^2.3.0",
     "yaml-eslint-parser": "^1.2.2"
   },
   "devDependencies": {
-    "eslint": "^8.42.0"
+    "eslint": "^8.43.0"
   }
 }

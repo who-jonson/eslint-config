@@ -7,7 +7,11 @@
     "email": "www.jbc.bd@gmail.com",
     "url": "https://github.com/who-jonson"
   },
-  "packageManager": "pnpm@8.6.2",
+  "repository": {
+    "type": "git",
+    "directory": "packages/vue",
+    "url": "https://github.com/who-jonson/eslint-config.git"
+  },
   "homepage": "https://github.com/who-jonson/eslint-config",
   "main": "index.js",
   "files": [
@@ -17,10 +21,11 @@
     "eslint": ">=8"
   },
   "dependencies": {
+    "@nuxt/eslint-config": "^0.1.1",
     "@whoj/eslint-config-ts": "workspace:*",
-    "eslint-plugin-vue": "^9.14.1"
+    "eslint-plugin-vue": "^9.15.0"
   },
   "devDependencies": {
-    "eslint": "^8.42.0"
+    "eslint": "^8.43.0"
   }
 }

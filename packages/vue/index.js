@@ -1,5 +1,10 @@
+const { env, parserOptions, overrides } = require('@nuxt/eslint-config');
+
 module.exports = {
+  env,
+  parserOptions,
   overrides: [
+    ...overrides,
     {
       files: ['*.vue'],
       parser: 'vue-eslint-parser',
@@ -14,6 +19,7 @@ module.exports = {
     }
   ],
   extends: [
+    'eslint:recommended',
     'plugin:vue/vue3-recommended',
     '@whoj/eslint-config-ts'
   ],
