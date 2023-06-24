@@ -8,15 +8,22 @@ on:
 jobs:
   release:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18]
     steps:
       - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
         with:
-          fetch-depth: 0
+          version: 8
 
       - uses: actions/setup-node@v3
         with:
-          node-version: 18.x
-
+          node-version: ${{ matrix.node-version }}
+          registry-url: https://registry.npmjs.org/
+          cache: 'pnpm'
+          
+      - run: pnpm install
       - run: npx changelogithub
         env:
-          GITHUB_TOKEN: ${{secrets.GITTU_TOKEN}}
+          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
