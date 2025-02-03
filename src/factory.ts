@@ -102,7 +102,7 @@ export function antfu(
     isInEditor = isInEditorEnv()
     if (isInEditor)
       // eslint-disable-next-line no-console
-      console.log('[@antfu/eslint-config] Detected running in editor, some rules are disabled.')
+      console.log('[@whoj/eslint-config] Detected running in editor, some rules are disabled.')
   }
 
   const stylisticOptions = options.stylistic === false
@@ -290,7 +290,7 @@ export function antfu(
   )
 
   if ('files' in options) {
-    throw new Error('[@antfu/eslint-config] The first argument should not contain the "files" property as the options are supposed to be global. Place it in the second or later config instead.')
+    throw new Error('[@whoj/eslint-config] The first argument should not contain the "files" property as the options are supposed to be global. Place it in the second or later config instead.')
   }
 
   // User can optionally pass a flat config item to the first argument

@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url'
 import { isPackageExists } from 'local-pkg'
 
 const scopeUrl = fileURLToPath(new URL('.', import.meta.url))
-const isCwdInScope = isPackageExists('@antfu/eslint-config')
+const isCwdInScope = isPackageExists('@whoj/eslint-config')
 
 export const parserPlain = {
   meta: {
@@ -42,7 +42,7 @@ export async function combine(...configs: Awaitable<TypedFlatConfigItem | TypedF
  *
  * @example
  * ```ts
- * import { renameRules } from '@antfu/eslint-config'
+ * import { renameRules } from '@whoj/eslint-config'
  *
  * export default [{
  *   rules: renameRules(
@@ -75,7 +75,7 @@ export function renameRules(
  *
  * @example
  * ```ts
- * import { renamePluginInConfigs } from '@antfu/eslint-config'
+ * import { renamePluginInConfigs } from '@whoj/eslint-config'
  * import someConfigs from './some-configs'
  *
  * export default renamePluginInConfigs(someConfigs, {
@@ -117,7 +117,7 @@ export function isPackageInScope(name: string): boolean {
 }
 
 export async function ensurePackages(packages: (string | undefined)[]): Promise<void> {
-  if (process.env.CI || process.stdout.isTTY === false || isCwdInScope === false)
+  if (process.env.CI || !process.stdout.isTTY || !isCwdInScope)
     return
 
   const nonExistingPackages = packages.filter(i => i && !isPackageInScope(i)) as string[]
@@ -137,19 +137,9 @@ export function isInEditorEnv(): boolean {
     return false
   if (isInGitHooksOrLintStaged())
     return false
-  return !!(false
-    || process.env.VSCODE_PID
-    || process.env.VSCODE_CWD
-    || process.env.JETBRAINS_IDE
-    || process.env.VIM
-    || process.env.NVIM
-  )
+  return !!(process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM || process.env.NVIM)
 }
 
 export function isInGitHooksOrLintStaged(): boolean {
-  return !!(false
-    || process.env.GIT_PARAMS
-    || process.env.VSCODE_GIT_COMMAND
-    || process.env.npm_lifecycle_script?.startsWith('lint-staged')
-  )
+  return !!(process.env.GIT_PARAMS || process.env.VSCODE_GIT_COMMAND || process.env.npm_lifecycle_script?.startsWith('lint-staged'))
 }

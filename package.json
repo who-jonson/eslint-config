@@ -1,13 +1,11 @@
 {
-  "name": "@antfu/eslint-config",
+  "name": "@whoj/eslint-config",
   "type": "module",
-  "version": "4.1.1",
-  "packageManager": "pnpm@10.0.0",
-  "description": "Anthony's ESLint config",
-  "author": "Anthony Fu <anthonyfu117@hotmail.com> (https://github.com/antfu/)",
+  "version": "2.0.0",
+  "packageManager": "pnpm@10.2.0",
+  "description": "ESLint config",
   "license": "MIT",
-  "funding": "https://github.com/sponsors/antfu",
-  "homepage": "https://github.com/antfu/eslint-config",
+  "homepage": "https://github.com/who-jonson/eslint-config",
   "keywords": [
     "eslint-config"
   ],
@@ -36,25 +34,12 @@
     "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
-    "@eslint-react/eslint-plugin": "^1.19.0",
     "@prettier/plugin-xml": "^3.4.1",
     "@unocss/eslint-plugin": ">=0.50.0",
-    "astro-eslint-parser": "^1.0.2",
     "eslint": "^9.10.0",
-    "eslint-plugin-astro": "^1.2.0",
-    "eslint-plugin-format": ">=0.1.0",
-    "eslint-plugin-react-hooks": "^5.0.0",
-    "eslint-plugin-react-refresh": "^0.4.4",
-    "eslint-plugin-solid": "^0.14.3",
-    "eslint-plugin-svelte": ">=2.35.1",
-    "prettier-plugin-astro": "^0.14.0",
-    "prettier-plugin-slidev": "^1.0.5",
-    "svelte-eslint-parser": ">=0.37.0"
+    "eslint-plugin-format": ">=0.1.0"
   },
   "peerDependenciesMeta": {
-    "@eslint-react/eslint-plugin": {
-      "optional": true
-    },
     "@prettier/plugin-xml": {
       "optional": true
     },
@@ -64,31 +49,7 @@
     "astro-eslint-parser": {
       "optional": true
     },
-    "eslint-plugin-astro": {
-      "optional": true
-    },
     "eslint-plugin-format": {
-      "optional": true
-    },
-    "eslint-plugin-react-hooks": {
-      "optional": true
-    },
-    "eslint-plugin-react-refresh": {
-      "optional": true
-    },
-    "eslint-plugin-solid": {
-      "optional": true
-    },
-    "eslint-plugin-svelte": {
-      "optional": true
-    },
-    "prettier-plugin-astro": {
-      "optional": true
-    },
-    "prettier-plugin-slidev": {
-      "optional": true
-    },
-    "svelte-eslint-parser": {
       "optional": true
     }
   },
@@ -130,7 +91,6 @@
     "yargs": "^17.7.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "workspace:*",
     "@antfu/ni": "^23.3.1",
     "@eslint-react/eslint-plugin": "^1.26.0",
     "@eslint/config-inspector": "^1.0.0",
@@ -141,6 +101,7 @@
     "@types/prompts": "^2.4.9",
     "@types/yargs": "^17.0.33",
     "@unocss/eslint-plugin": "^65.4.3",
+    "@whoj/eslint-config": "workspace:*",
     "astro-eslint-parser": "^1.2.1",
     "bumpp": "^10.0.1",
     "eslint": "^9.19.0",
@@ -159,6 +120,7 @@
     "prettier-plugin-astro": "^0.14.1",
     "prettier-plugin-slidev": "^1.0.5",
     "rimraf": "^6.0.1",
+    "sass": "^1.83.4",
     "simple-git-hooks": "^2.11.1",
     "svelte": "^5.19.6",
     "svelte-eslint-parser": "^0.43.0",
@@ -167,6 +129,12 @@
     "typescript": "^5.7.3",
     "vitest": "^3.0.4",
     "vue": "^3.5.13"
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "simple-git-hooks"
+    ]
   },
   "resolutions": {
     "@eslint-community/eslint-utils": "^4.4.1",
