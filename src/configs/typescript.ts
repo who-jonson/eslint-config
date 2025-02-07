@@ -1,3 +1,5 @@
+import process from 'node:process';
+
 import type {
   OptionsFiles,
   OptionsOverrides,
@@ -8,10 +10,9 @@ import type {
   OptionsTypeScriptParserOptions
 } from '../types';
 
-import process from 'node:process';
-import { GLOB_TS, GLOB_TSX, GLOB_ASTRO_TS, GLOB_MARKDOWN } from '../globs';
 import { pluginAntfu } from '../plugins';
 import { renameRules, interopDefault } from '../utils';
+import { GLOB_TS, GLOB_TSX, GLOB_ASTRO_TS, GLOB_MARKDOWN } from '../globs';
 
 export async function typescript(
   options: OptionsFiles & OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions & OptionsProjectType = {}

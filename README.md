@@ -37,9 +37,9 @@ Combined with legacy config:
 If you still use some configs from the legacy eslintrc format, you can use the [`@eslint/eslintrc`](https://www.npmjs.com/package/@eslint/eslintrc) package to convert them to the flat config.
 
 ```js
-import { FlatCompat } from '@eslint/eslintrc';
 // eslint.config.mjs
 import whoj from '@whoj/eslint-config';
+import { FlatCompat } from '@eslint/eslintrc';
 
 const compat = new FlatCompat();
 

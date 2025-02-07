@@ -40,21 +40,7 @@ export default whoj(
       'eqeqeq': 'warn',
       'style/semi': [2, 'always'],
       'import/order': 'off',
-      'require-await': 'warn',
-      'no-useless-escape': 'off',
-      'style/quotes': ['error', 'single'],
-      'style/comma-dangle': ['error', 'never'],
-      'style/spaced-comment': 'off',
-      'node/prefer-global/buffer': ['off'],
-      'node/prefer-global/process': ['off'],
-
-      'jsdoc/require-returns-check': ['off'],
-      'jsdoc/require-returns-description': ['off'],
-
-      'perfectionist/sort-imports': ['off'],
-      'perfectionist/sort-exports': ['error', { type: 'line-length' }],
-      'perfectionist/sort-named-exports': ['error', { type: 'line-length' }],
-      'perfectionist/sort-named-imports': ['error', { type: 'line-length' }],
+      'require-await': 'off',
 
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'

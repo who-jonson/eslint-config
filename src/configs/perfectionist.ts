@@ -17,19 +17,21 @@ export function perfectionist(): TypedFlatConfigItem[] {
       rules: {
         'perfectionist/sort-exports': ['error', { order: 'asc', type: 'line-length' }],
         'perfectionist/sort-imports': ['error', {
-          groups: [
-            'type',
-            ['parent-type', 'sibling-type', 'index-type', 'internal-type'],
-
-            'builtin',
-            'external',
-            'internal',
-            ['parent', 'sibling', 'index'],
-            'side-effect',
-            'object',
-            'unknown'
-          ],
-          newlinesBetween: 'ignore',
+          newlinesBetween: 'always',
+          // groups: [
+          //   'type',
+          //   ['parent-type', 'sibling-type', 'index-type', 'internal-type'],
+          //
+          //   'builtin',
+          //   'external',
+          //
+          //   'internal',
+          //   ['parent', 'sibling', 'index'],
+          //
+          //   'side-effect',
+          //   'object',
+          //   'unknown'
+          // ],
           order: 'asc',
           type: 'line-length'
         }],

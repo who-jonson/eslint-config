@@ -1,8 +1,7 @@
+import fs from 'fs-extra';
+import { execa } from 'execa';
 import { join } from 'node:path';
 import process from 'node:process';
-
-import { execa } from 'execa';
-import fs from 'fs-extra';
 import { it, expect, afterAll, beforeEach } from 'vitest';
 
 const CLI_PATH = join(__dirname, '../bin/index.js');

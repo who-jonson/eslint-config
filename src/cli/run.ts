@@ -1,18 +1,17 @@
 /* eslint-disable perfectionist/sort-objects */
-import type { PromptResult, FrameworkOption, ExtraLibrariesOption } from './types';
-
 import fs from 'node:fs';
+import c from 'picocolors';
 import path from 'node:path';
 import process from 'node:process';
 import * as p from '@clack/prompts';
-import c from 'picocolors';
 
-import { extra, frameworks, extraOptions, frameworkOptions } from './constants';
+import type { PromptResult, FrameworkOption, ExtraLibrariesOption } from './types';
+
+import { isGitClean } from './utils';
 import { updateEslintFiles } from './stages/update-eslint-files';
 import { updatePackageJson } from './stages/update-package-json';
 import { updateVscodeSettings } from './stages/update-vscode-settings';
-
-import { isGitClean } from './utils';
+import { extra, frameworks, extraOptions, frameworkOptions } from './constants';
 
 export interface CliRunOptions {
   /**

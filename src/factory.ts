@@ -1,9 +1,14 @@
 import type { Linter } from 'eslint';
+
+import { isPackageExists } from 'local-pkg';
+import { FlatConfigComposer } from 'eslint-flat-config-utils';
+
 import type { RuleOptions } from './typegen';
 import type { Awaitable, ConfigNames, OptionsConfig, TypedFlatConfigItem } from './types';
 
-import { FlatConfigComposer } from 'eslint-flat-config-utils';
-import { isPackageExists } from 'local-pkg';
+import { regexp } from './configs/regexp';
+import { formatters } from './configs/formatters';
+import { isInEditorEnv, interopDefault } from './utils';
 import {
   jsx,
   vue,
@@ -32,9 +37,6 @@ import {
   perfectionist,
   sortPackageJson
 } from './configs';
-import { formatters } from './configs/formatters';
-import { regexp } from './configs/regexp';
-import { isInEditorEnv, interopDefault } from './utils';
 
 const flatConfigProps = [
   'name',
@@ -313,6 +315,15 @@ export function whoj(
   }, {} as TypedFlatConfigItem);
   if (Object.keys(fusedConfig).length)
     configs.push([fusedConfig]);
+
+  configs.push([{
+    rules: {
+      'eqeqeq': 'warn',
+      'import/order': 'off',
+      'no-useless-escape': 'warn',
+      'require-await': 'warn'
+    }
+  }]);
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>();
 

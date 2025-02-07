@@ -1,12 +1,11 @@
-import process from 'node:process';
-
-import * as p from '@clack/prompts';
-import c from 'picocolors';
 import yargs from 'yargs';
+import c from 'picocolors';
+import process from 'node:process';
+import * as p from '@clack/prompts';
 import { hideBin } from 'yargs/helpers';
 
-import { pkgJson } from './constants';
 import { run } from './run';
+import { pkgJson } from './constants';
 
 function header(): void {
   console.log('\n');

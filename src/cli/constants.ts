@@ -1,6 +1,7 @@
+import c from 'picocolors';
+
 import type { PromItem, FrameworkOption, ExtraLibrariesOption } from './types';
 
-import c from 'picocolors';
 import pkgJson from '../../package.json';
 
 export { pkgJson };

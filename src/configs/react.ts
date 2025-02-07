@@ -1,9 +1,9 @@
+import { isPackageExists } from 'local-pkg';
+
 import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem, OptionsTypeScriptWithTypes, OptionsTypeScriptParserOptions } from '../types';
 
-import { isPackageExists } from 'local-pkg';
-import { GLOB_TS, GLOB_SRC, GLOB_TSX, GLOB_ASTRO_TS, GLOB_MARKDOWN } from '../globs';
-
 import { ensurePackages, interopDefault } from '../utils';
+import { GLOB_TS, GLOB_SRC, GLOB_TSX, GLOB_ASTRO_TS, GLOB_MARKDOWN } from '../globs';
 
 // react refresh
 const ReactRefreshAllowConstantExportPackages = [

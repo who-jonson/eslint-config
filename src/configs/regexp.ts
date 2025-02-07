@@ -1,6 +1,6 @@
-import type { OptionsRegExp, OptionsOverrides, TypedFlatConfigItem } from '../types';
-
 import { configs } from 'eslint-plugin-regexp';
+
+import type { OptionsRegExp, OptionsOverrides, TypedFlatConfigItem } from '../types';
 
 export async function regexp(
   options: OptionsRegExp & OptionsOverrides = {}

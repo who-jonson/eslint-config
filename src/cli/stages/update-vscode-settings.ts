@@ -1,12 +1,11 @@
-import type { PromptResult } from '../types';
 import fs from 'node:fs';
-import fsp from 'node:fs/promises';
+import c from 'picocolors';
 import path from 'node:path';
-
+import fsp from 'node:fs/promises';
 import process from 'node:process';
 import * as p from '@clack/prompts';
 
-import c from 'picocolors';
+import type { PromptResult } from '../types';
 
 import { vscodeSettingsString } from '../constants';
 
