@@ -13,6 +13,7 @@ import {
   jsx,
   vue,
   node,
+  nuxt,
   test,
   toml,
   yaml,
@@ -47,6 +48,13 @@ const flatConfigProps = [
   'rules',
   'settings'
 ] satisfies (keyof TypedFlatConfigItem)[];
+
+const NuxtPackages = [
+  'nuxt',
+  '@nuxt/kit',
+  '@nuxt/schema',
+  '@nuxt/content'
+];
 
 const VuePackages = [
   'vue',
@@ -89,6 +97,7 @@ export function whoj(
     componentExts = [],
     gitignore: enableGitignore = true,
     jsx: enableJsx = true,
+    nuxt: enableNuxt = NuxtPackages.some(i => isPackageExists(i)),
     react: enableReact = false,
     regexp: enableRegexp = true,
     solid: enableSolid = false,
@@ -96,7 +105,7 @@ export function whoj(
     typescript: enableTypeScript = isPackageExists('typescript'),
     unicorn: enableUnicorn = true,
     unocss: enableUnoCSS = false,
-    vue: enableVue = VuePackages.some(i => isPackageExists(i))
+    vue: enableVue = enableNuxt !== false && VuePackages.some(i => isPackageExists(i))
   } = options;
 
   let isInEditor = options.isInEditor;
@@ -324,6 +333,22 @@ export function whoj(
       'require-await': 'warn'
     }
   }]);
+
+  if (enableNuxt) {
+    const { dirs, features = {} } = resolveSubOptions(options, 'nuxt');
+    configs.push(nuxt({
+      dirs,
+      features: {
+        ...features,
+        stylistic: features.stylistic === false
+          ? false
+          : {
+              ...stylisticOptions,
+              ...(typeof features.stylistic !== 'object' ? {} : features.stylistic)
+            }
+      }
+    }));
+  }
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>();
 

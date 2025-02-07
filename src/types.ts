@@ -3,6 +3,7 @@ import type { ParserOptions } from '@typescript-eslint/parser';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks';
+import type { NuxtESLintConfigOptions, NuxtESLintFeaturesOptions } from '@nuxt/eslint-config/flat';
 
 import type { ConfigNames, RuleOptions } from './typegen';
 import type { VendoredPrettierOptions } from './vender/prettier-types';
@@ -28,6 +29,10 @@ export interface OptionsFiles {
    * Override the `files` option to provide custom globs.
    */
   files?: string[];
+}
+
+export interface OptionsNuxt extends Omit<NuxtESLintConfigOptions, 'features'> {
+  features?: Omit<NuxtESLintFeaturesOptions, 'standalone'>;
 }
 
 export interface OptionsVue extends OptionsOverrides {
@@ -290,6 +295,13 @@ export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType 
    * @default auto-detect based on the dependencies
    */
   vue?: boolean | OptionsVue;
+
+  /**
+   * Enable Nuxt support.
+   *
+   * @default auto-detect based on the dependencies
+   */
+  nuxt?: boolean | OptionsNuxt;
 
   /**
    * Enable JSONC support.

@@ -17,7 +17,6 @@ export function perfectionist(): TypedFlatConfigItem[] {
       rules: {
         'perfectionist/sort-exports': ['error', { order: 'asc', type: 'line-length' }],
         'perfectionist/sort-imports': ['error', {
-          newlinesBetween: 'always',
           // groups: [
           //   'type',
           //   ['parent-type', 'sibling-type', 'index-type', 'internal-type'],
@@ -32,6 +31,7 @@ export function perfectionist(): TypedFlatConfigItem[] {
           //   'object',
           //   'unknown'
           // ],
+          newlinesBetween: 'ignore',
           order: 'asc',
           type: 'line-length'
         }],
