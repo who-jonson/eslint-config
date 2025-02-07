@@ -61,7 +61,7 @@ export async function vue(
           watchEffect: 'readonly',
         },
       },
-      name: 'antfu/vue/setup',
+      name: 'whoj/vue/setup',
       plugins: {
         vue: pluginVue,
       },
@@ -81,7 +81,7 @@ export async function vue(
           sourceType: 'module',
         },
       },
-      name: 'antfu/vue/rules',
+      name: 'whoj/vue/rules',
       processor: sfcBlocks === false
         ? pluginVue.processors['.vue']
         : mergeProcessors([
@@ -109,13 +109,12 @@ export async function vue(
               ...pluginVue.configs['vue3-recommended'].rules as any,
             },
 
-        'antfu/no-top-level-await': 'off',
         'node/prefer-global/process': 'off',
         'ts/explicit-function-return-type': 'off',
-
         'vue/block-order': ['error', {
           order: ['script', 'template', 'style'],
         }],
+
         'vue/component-name-in-template-casing': ['error', 'PascalCase'],
         'vue/component-options-name-casing': ['error', 'PascalCase'],
         // this is deprecated
@@ -162,6 +161,7 @@ export async function vue(
         'vue/require-prop-types': 'off',
         'vue/space-infix-ops': 'error',
         'vue/space-unary-ops': ['error', { nonwords: false, words: true }],
+        'whoj/no-top-level-await': 'off',
 
         ...stylistic
           ? {

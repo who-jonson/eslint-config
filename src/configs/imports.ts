@@ -9,23 +9,23 @@ export async function imports(options: OptionsStylistic = {}): Promise<TypedFlat
 
   return [
     {
-      name: 'antfu/imports/rules',
+      name: 'whoj/imports/rules',
       plugins: {
-        antfu: pluginAntfu,
         import: pluginImport,
+        whoj: pluginAntfu,
       },
       rules: {
-        'antfu/import-dedupe': 'error',
-        'antfu/no-import-dist': 'error',
-        'antfu/no-import-node-modules-by-path': 'error',
-
         'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
         'import/first': 'error',
         'import/no-duplicates': 'error',
+
         'import/no-mutable-exports': 'error',
         'import/no-named-default': 'error',
         'import/no-self-import': 'error',
         'import/no-webpack-loader-syntax': 'error',
+        'whoj/import-dedupe': 'error',
+        'whoj/no-import-dist': 'error',
+        'whoj/no-import-node-modules-by-path': 'error',
 
         ...stylistic
           ? {

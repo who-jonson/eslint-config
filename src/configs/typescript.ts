@@ -93,17 +93,17 @@ export async function typescript(
           ...parserOptions as any,
         },
       },
-      name: `antfu/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
+      name: `whoj/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
     }
   }
 
   return [
     {
       // Install the plugins without globs, so they can be configured separately.
-      name: 'antfu/typescript/setup',
+      name: 'whoj/typescript/setup',
       plugins: {
-        antfu: pluginAntfu,
         ts: pluginTs as any,
+        whoj: pluginAntfu,
       },
     },
     // assign type-aware parser for type-aware files and type-unaware parser for the rest
@@ -117,7 +117,7 @@ export async function typescript(
         ],
     {
       files,
-      name: 'antfu/typescript/rules',
+      name: 'whoj/typescript/rules',
       rules: {
         ...renameRules(
           pluginTs.configs['eslint-recommended'].overrides![0].rules!,
@@ -179,7 +179,7 @@ export async function typescript(
       ? [{
           files: filesTypeAware,
           ignores: ignoresTypeAware,
-          name: 'antfu/typescript/rules-type-aware',
+          name: 'whoj/typescript/rules-type-aware',
           rules: {
             ...typeAwareRules,
             ...overridesTypeAware,

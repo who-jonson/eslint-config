@@ -42,25 +42,25 @@ export async function stylistic(
 
   return [
     {
-      name: 'antfu/stylistic/rules',
+      name: 'whoj/stylistic/rules',
       plugins: {
-        antfu: pluginAntfu,
         style: pluginStylistic,
+        whoj: pluginAntfu,
       },
       rules: {
         ...config.rules,
 
-        'antfu/consistent-chaining': 'error',
-        'antfu/consistent-list-newline': 'error',
+        'whoj/consistent-chaining': 'error',
+        'whoj/consistent-list-newline': 'error',
 
         ...(lessOpinionated
           ? {
               curly: ['error', 'all'],
             }
           : {
-              'antfu/curly': 'error',
-              'antfu/if-newline': 'error',
-              'antfu/top-level-function': 'error',
+              'whoj/curly': 'error',
+              'whoj/if-newline': 'error',
+              'whoj/top-level-function': 'error',
             }
         ),
 

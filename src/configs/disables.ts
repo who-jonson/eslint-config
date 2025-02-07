@@ -6,32 +6,32 @@ export async function disables(): Promise<TypedFlatConfigItem[]> {
   return [
     {
       files: [`**/scripts/${GLOB_SRC}`],
-      name: 'antfu/disables/scripts',
+      name: 'whoj/disables/scripts',
       rules: {
-        'antfu/no-top-level-await': 'off',
         'no-console': 'off',
         'ts/explicit-function-return-type': 'off',
+        'whoj/no-top-level-await': 'off',
       },
     },
     {
       files: [`**/cli/${GLOB_SRC}`, `**/cli.${GLOB_SRC_EXT}`],
-      name: 'antfu/disables/cli',
+      name: 'whoj/disables/cli',
       rules: {
-        'antfu/no-top-level-await': 'off',
         'no-console': 'off',
+        'whoj/no-top-level-await': 'off',
       },
     },
     {
       files: ['**/bin/**/*', `**/bin.${GLOB_SRC_EXT}`],
-      name: 'antfu/disables/bin',
+      name: 'whoj/disables/bin',
       rules: {
-        'antfu/no-import-dist': 'off',
-        'antfu/no-import-node-modules-by-path': 'off',
+        'whoj/no-import-dist': 'off',
+        'whoj/no-import-node-modules-by-path': 'off',
       },
     },
     {
       files: ['**/*.d.?([cm])ts'],
-      name: 'antfu/disables/dts',
+      name: 'whoj/disables/dts',
       rules: {
         'eslint-comments/no-unlimited-disable': 'off',
         'import/no-duplicates': 'off',
@@ -41,18 +41,18 @@ export async function disables(): Promise<TypedFlatConfigItem[]> {
     },
     {
       files: ['**/*.js', '**/*.cjs'],
-      name: 'antfu/disables/cjs',
+      name: 'whoj/disables/cjs',
       rules: {
         'ts/no-require-imports': 'off',
       },
     },
     {
       files: [`**/*.config.${GLOB_SRC_EXT}`, `**/*.config.*.${GLOB_SRC_EXT}`],
-      name: 'antfu/disables/config-files',
+      name: 'whoj/disables/config-files',
       rules: {
-        'antfu/no-top-level-await': 'off',
         'no-console': 'off',
         'ts/explicit-function-return-type': 'off',
+        'whoj/no-top-level-await': 'off',
       },
     },
   ]

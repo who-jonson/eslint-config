@@ -1,9 +1,9 @@
 // @ts-expect-error missing types
 import styleMigrate from '@stylistic/eslint-plugin-migrate'
 
-import { antfu } from './src'
+import { whoj } from './src'
 
-export default antfu(
+export default whoj(
   {
     vue: true,
     react: true,

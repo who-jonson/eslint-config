@@ -36,20 +36,19 @@ export async function javascript(
       linterOptions: {
         reportUnusedDisableDirectives: true,
       },
-      name: 'antfu/javascript/setup',
+      name: 'whoj/javascript/setup',
     },
     {
-      name: 'antfu/javascript/rules',
+      name: 'whoj/javascript/rules',
       plugins: {
-        'antfu': pluginAntfu,
         'unused-imports': pluginUnusedImports,
+        'whoj': pluginAntfu,
       },
       rules: {
         'accessor-pairs': ['error', { enforceForClassMembers: true, setWithoutGet: true }],
 
-        'antfu/no-top-level-await': 'error',
-
         'array-callback-return': 'error',
+
         'block-scoped-var': 'error',
         'constructor-super': 'error',
         'default-case-last': 'error',
@@ -206,6 +205,7 @@ export async function javascript(
         'use-isnan': ['error', { enforceForIndexOf: true, enforceForSwitchCase: true }],
         'valid-typeof': ['error', { requireStringLiterals: true }],
         'vars-on-top': 'error',
+        'whoj/no-top-level-await': 'error',
         'yoda': ['error', 'never'],
 
         ...overrides,

@@ -207,4 +207,4 @@ Going more advanced, Check out [configs](https://github.com/antfu/eslint-config)
 
 ## License
 
-[MIT](./LICENSE) License &copy; 2025-PRESENT [B. Jonson](https://github.com/who-jonson)
+[MIT](./LICENSE) License &copy; 2020-PRESENT [B. Jonson](https://github.com/who-jonson)
