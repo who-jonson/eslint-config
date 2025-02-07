@@ -1,40 +1,40 @@
-import type { OptionsFiles, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types'
+import type { OptionsFiles, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types';
 
-import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs'
-import { interopDefault } from '../utils'
+import { GLOB_JSON, GLOB_JSON5, GLOB_JSONC } from '../globs';
+import { interopDefault } from '../utils';
 
 export async function jsonc(
-  options: OptionsFiles & OptionsStylistic & OptionsOverrides = {},
+  options: OptionsFiles & OptionsStylistic & OptionsOverrides = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     files = [GLOB_JSON, GLOB_JSON5, GLOB_JSONC],
     overrides = {},
-    stylistic = true,
-  } = options
+    stylistic = true
+  } = options;
 
   const {
-    indent = 2,
-  } = typeof stylistic === 'boolean' ? {} : stylistic
+    indent = 2
+  } = typeof stylistic === 'boolean' ? {} : stylistic;
 
   const [
     pluginJsonc,
-    parserJsonc,
+    parserJsonc
   ] = await Promise.all([
     interopDefault(import('eslint-plugin-jsonc')),
-    interopDefault(import('jsonc-eslint-parser')),
-  ] as const)
+    interopDefault(import('jsonc-eslint-parser'))
+  ] as const);
 
   return [
     {
       name: 'whoj/jsonc/setup',
       plugins: {
-        jsonc: pluginJsonc as any,
-      },
+        jsonc: pluginJsonc as any
+      }
     },
     {
       files,
       languageOptions: {
-        parser: parserJsonc,
+        parser: parserJsonc
       },
       name: 'whoj/jsonc/rules',
       rules: {
@@ -76,12 +76,12 @@ export async function jsonc(
               'jsonc/object-curly-spacing': ['error', 'always'],
               'jsonc/object-property-newline': ['error', { allowMultiplePropertiesPerLine: true }],
               'jsonc/quote-props': 'error',
-              'jsonc/quotes': 'error',
+              'jsonc/quotes': 'error'
             }
           : {},
 
-        ...overrides,
-      },
-    },
-  ]
+        ...overrides
+      }
+    }
+  ];
 }

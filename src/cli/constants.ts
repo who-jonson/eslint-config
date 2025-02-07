@@ -1,9 +1,9 @@
-import type { ExtraLibrariesOption, FrameworkOption, PromItem } from './types'
+import type { PromItem, FrameworkOption, ExtraLibrariesOption } from './types';
 
-import c from 'picocolors'
-import pkgJson from '../../package.json'
+import c from 'picocolors';
+import pkgJson from '../../package.json';
 
-export { pkgJson }
+export { pkgJson };
 
 export const vscodeSettingsString = `
   // Disable the default formatter, use eslint instead
@@ -55,70 +55,70 @@ export const vscodeSettingsString = `
     "pcss",
     "postcss"
   ]
-`
+`;
 
 export const frameworkOptions: PromItem<FrameworkOption>[] = [
   {
     label: c.green('Vue'),
-    value: 'vue',
+    value: 'vue'
   },
   {
     label: c.cyan('React'),
-    value: 'react',
+    value: 'react'
   },
   {
     label: c.red('Svelte'),
-    value: 'svelte',
+    value: 'svelte'
   },
   {
     label: c.magenta('Astro'),
-    value: 'astro',
+    value: 'astro'
   },
   {
     label: c.cyan('Solid'),
-    value: 'solid',
+    value: 'solid'
   },
   {
     label: c.blue('Slidev'),
-    value: 'slidev',
-  },
-]
+    value: 'slidev'
+  }
+];
 
-export const frameworks: FrameworkOption[] = frameworkOptions.map(({ value }) => (value))
+export const frameworks: FrameworkOption[] = frameworkOptions.map(({ value }) => (value));
 
 export const extraOptions: PromItem<ExtraLibrariesOption>[] = [
   {
     hint: 'Use external formatters (Prettier and/or dprint) to format files that ESLint cannot handle yet (.css, .html, etc)',
     label: c.red('Formatter'),
-    value: 'formatter',
+    value: 'formatter'
   },
   {
     label: c.cyan('UnoCSS'),
-    value: 'unocss',
-  },
-]
+    value: 'unocss'
+  }
+];
 
-export const extra: ExtraLibrariesOption[] = extraOptions.map(({ value }) => (value))
+export const extra: ExtraLibrariesOption[] = extraOptions.map(({ value }) => (value));
 
 export const dependenciesMap = {
   astro: [
     'eslint-plugin-astro',
-    'astro-eslint-parser',
+    'astro-eslint-parser'
   ],
   react: [
     '@eslint-react/eslint-plugin',
     'eslint-plugin-react-hooks',
-    'eslint-plugin-react-refresh',
+    'eslint-plugin-react-refresh'
   ],
   slidev: [
-    'prettier-plugin-slidev',
+    'prettier-plugin-slidev'
   ],
   solid: [
-    'eslint-plugin-solid',
+    'eslint-plugin-solid'
   ],
   svelte: [
     'eslint-plugin-svelte',
-    'svelte-eslint-parser',
+    'svelte-eslint-parser'
   ],
-  vue: [],
-} as const
+  vue: []
+} as const;

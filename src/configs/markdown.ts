@@ -1,27 +1,27 @@
-import type { OptionsComponentExts, OptionsFiles, OptionsOverrides, TypedFlatConfigItem } from '../types'
+import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem, OptionsComponentExts } from '../types';
 
-import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors'
-import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '../globs'
+import { mergeProcessors, processorPassThrough } from 'eslint-merge-processors';
+import { GLOB_MARKDOWN, GLOB_MARKDOWN_CODE, GLOB_MARKDOWN_IN_MARKDOWN } from '../globs';
 
-import { interopDefault, parserPlain } from '../utils'
+import { parserPlain, interopDefault } from '../utils';
 
 export async function markdown(
-  options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {},
+  options: OptionsFiles & OptionsComponentExts & OptionsOverrides = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     componentExts = [],
     files = [GLOB_MARKDOWN],
-    overrides = {},
-  } = options
+    overrides = {}
+  } = options;
 
-  const markdown = await interopDefault(import('@eslint/markdown'))
+  const markdown = await interopDefault(import('@eslint/markdown'));
 
   return [
     {
       name: 'whoj/markdown/setup',
       plugins: {
-        markdown,
-      },
+        markdown
+      }
     },
     {
       files,
@@ -32,27 +32,27 @@ export async function markdown(
       // add a pass-through processor for the markdown file itself.
       processor: mergeProcessors([
         markdown.processors!.markdown,
-        processorPassThrough,
-      ]),
+        processorPassThrough
+      ])
     },
     {
       files,
       languageOptions: {
-        parser: parserPlain,
+        parser: parserPlain
       },
-      name: 'whoj/markdown/parser',
+      name: 'whoj/markdown/parser'
     },
     {
       files: [
         GLOB_MARKDOWN_CODE,
-        ...componentExts.map(ext => `${GLOB_MARKDOWN}/**/*.${ext}`),
+        ...componentExts.map(ext => `${GLOB_MARKDOWN}/**/*.${ext}`)
       ],
       languageOptions: {
         parserOptions: {
           ecmaFeatures: {
-            impliedStrict: true,
-          },
-        },
+            impliedStrict: true
+          }
+        }
       },
       name: 'whoj/markdown/disables',
       rules: {
@@ -87,8 +87,8 @@ export async function markdown(
         'unused-imports/no-unused-vars': 'off',
         'whoj/no-top-level-await': 'off',
 
-        ...overrides,
-      },
-    },
-  ]
+        ...overrides
+      }
+    }
+  ];
 }

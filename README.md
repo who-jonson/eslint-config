@@ -24,9 +24,9 @@ And create `eslint.config.mjs` in your project root:
 
 ```js
 // eslint.config.mjs
-import whoj from '@whoj/eslint-config'
+import whoj from '@whoj/eslint-config';
 
-export default whoj()
+export default whoj();
 ```
 
 <details>
@@ -37,27 +37,27 @@ Combined with legacy config:
 If you still use some configs from the legacy eslintrc format, you can use the [`@eslint/eslintrc`](https://www.npmjs.com/package/@eslint/eslintrc) package to convert them to the flat config.
 
 ```js
-import { FlatCompat } from '@eslint/eslintrc'
+import { FlatCompat } from '@eslint/eslintrc';
 // eslint.config.mjs
-import whoj from '@whoj/eslint-config'
+import whoj from '@whoj/eslint-config';
 
-const compat = new FlatCompat()
+const compat = new FlatCompat();
 
 export default whoj(
   {
-    ignores: [],
+    ignores: []
   },
 
   // Legacy config
   ...compat.config({
     extends: [
-      'eslint:recommended',
+      'eslint:recommended'
       // Other extends...
-    ],
+    ]
   })
 
   // Other flat configs...
-)
+);
 ```
 
 > Note that `.eslintignore` no longer works in Flat config, see [customization](#customization) for more details.
@@ -149,7 +149,7 @@ You can configure each integration individually, for example:
 
 ```js
 // eslint.config.js
-import whoj from '@whoj/eslint-config'
+import whoj from '@whoj/eslint-config';
 
 export default whoj({
 // Type of the project. 'lib' for libraries, the default is 'app'
@@ -161,7 +161,7 @@ export default whoj({
   // Or customize the stylistic rules
   stylistic: {
     indent: 2, // 4, or 'tab'
-    quotes: 'single', // or 'double'
+    quotes: 'single' // or 'double'
   },
 
   // TypeScript and Vue are autodetected, you can also explicitly enable them:
@@ -174,17 +174,17 @@ export default whoj({
 
   // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
   ignores: [
-    '**/fixtures',
+    '**/fixtures'
     // ...globs
   ]
-})
+});
 ```
 
 The `whoj` factory function also accepts any number of arbitrary custom config overrides:
 
 ```js
 // eslint.config.js
-import whoj from '@whoj/eslint-config'
+import whoj from '@whoj/eslint-config';
 
 export default whoj(
   {
@@ -195,12 +195,12 @@ export default whoj(
   // you can have multiple configs
   {
     files: ['**/*.ts'],
-    rules: {},
+    rules: {}
   },
   {
-    rules: {},
-  },
-)
+    rules: {}
+  }
+);
 ```
 
 Going more advanced, Check out [configs](https://github.com/antfu/eslint-config)

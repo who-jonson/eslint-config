@@ -1,40 +1,40 @@
-import type { OptionsFiles, OptionsHasTypeScript, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types'
+import type { OptionsFiles, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem, OptionsHasTypeScript } from '../types';
 
-import { GLOB_SVELTE } from '../globs'
-import { ensurePackages, interopDefault } from '../utils'
+import { GLOB_SVELTE } from '../globs';
+import { ensurePackages, interopDefault } from '../utils';
 
 export async function svelte(
-  options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {},
+  options: OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     files = [GLOB_SVELTE],
     overrides = {},
-    stylistic = true,
-  } = options
+    stylistic = true
+  } = options;
 
   const {
     indent = 2,
-    quotes = 'single',
-  } = typeof stylistic === 'boolean' ? {} : stylistic
+    quotes = 'single'
+  } = typeof stylistic === 'boolean' ? {} : stylistic;
 
   await ensurePackages([
-    'eslint-plugin-svelte',
-  ])
+    'eslint-plugin-svelte'
+  ]);
 
   const [
     pluginSvelte,
-    parserSvelte,
+    parserSvelte
   ] = await Promise.all([
     interopDefault(import('eslint-plugin-svelte')),
-    interopDefault(import('svelte-eslint-parser')),
-  ] as const)
+    interopDefault(import('svelte-eslint-parser'))
+  ] as const);
 
   return [
     {
       name: 'whoj/svelte/setup',
       plugins: {
-        svelte: pluginSvelte,
-      },
+        svelte: pluginSvelte
+      }
     },
     {
       files,
@@ -44,8 +44,8 @@ export async function svelte(
           extraFileExtensions: ['.svelte'],
           parser: options.typescript
             ? await interopDefault(import('@typescript-eslint/parser')) as any
-            : null,
-        },
+            : null
+        }
       },
       name: 'whoj/svelte/rules',
       processor: pluginSvelte.processors['.svelte'],
@@ -57,7 +57,7 @@ export async function svelte(
           caughtErrors: 'none',
           ignoreRestSiblings: true,
           vars: 'all',
-          varsIgnorePattern: '^(\\$\\$Props$|\\$\\$Events$|\\$\\$Slots$)',
+          varsIgnorePattern: '^(\\$\\$Props$|\\$\\$Events$|\\$\\$Slots$)'
         }],
 
         'svelte/comment-directive': 'error',
@@ -87,8 +87,8 @@ export async function svelte(
             args: 'after-used',
             argsIgnorePattern: '^_',
             vars: 'all',
-            varsIgnorePattern: '^(_|\\$\\$Props$|\\$\\$Events$|\\$\\$Slots$)',
-          },
+            varsIgnorePattern: '^(_|\\$\\$Props$|\\$\\$Events$|\\$\\$Slots$)'
+          }
         ],
 
         ...stylistic
@@ -102,12 +102,12 @@ export async function svelte(
               'svelte/mustache-spacing': 'error',
               'svelte/no-spaces-around-equal-signs-in-attribute': 'error',
               'svelte/no-trailing-spaces': 'error',
-              'svelte/spaced-html-comment': 'error',
+              'svelte/spaced-html-comment': 'error'
             }
           : {},
 
-        ...overrides,
-      },
-    },
-  ]
+        ...overrides
+      }
+    }
+  ];
 }

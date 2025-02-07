@@ -1,15 +1,15 @@
-import type { Awaitable, TypedFlatConfigItem } from './types'
+import type { Awaitable, TypedFlatConfigItem } from './types';
 
-import process from 'node:process'
-import { fileURLToPath } from 'node:url'
-import { isPackageExists } from 'local-pkg'
+import process from 'node:process';
+import { fileURLToPath } from 'node:url';
+import { isPackageExists } from 'local-pkg';
 
-const scopeUrl = fileURLToPath(new URL('.', import.meta.url))
-const isCwdInScope = isPackageExists('@whoj/eslint-config')
+const scopeUrl = fileURLToPath(new URL('.', import.meta.url));
+const isCwdInScope = isPackageExists('@whoj/eslint-config');
 
 export const parserPlain = {
   meta: {
-    name: 'parser-plain',
+    name: 'parser-plain'
   },
   parseForESLint: (code: string) => ({
     ast: {
@@ -18,22 +18,22 @@ export const parserPlain = {
       loc: { end: code.length, start: 0 },
       range: [0, code.length],
       tokens: [],
-      type: 'Program',
+      type: 'Program'
     },
     scopeManager: null,
     services: { isPlain: true },
     visitorKeys: {
-      Program: [],
-    },
-  }),
-}
+      Program: []
+    }
+  })
+};
 
 /**
  * Combine array and non-array configs into a single array.
  */
 export async function combine(...configs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[]>[]): Promise<TypedFlatConfigItem[]> {
-  const resolved = await Promise.all(configs)
-  return resolved.flat()
+  const resolved = await Promise.all(configs);
+  return resolved.flat();
 }
 
 /**
@@ -56,18 +56,18 @@ export async function combine(...configs: Awaitable<TypedFlatConfigItem | TypedF
  */
 export function renameRules(
   rules: Record<string, any>,
-  map: Record<string, string>,
+  map: Record<string, string>
 ): Record<string, any> {
   return Object.fromEntries(
     Object.entries(rules)
       .map(([key, value]) => {
         for (const [from, to] of Object.entries(map)) {
           if (key.startsWith(`${from}/`))
-            return [to + key.slice(from.length), value]
+            return [to + key.slice(from.length), value];
         }
-        return [key, value]
-      }),
-  )
+        return [key, value];
+      })
+  );
 }
 
 /**
@@ -86,60 +86,60 @@ export function renameRules(
  */
 export function renamePluginInConfigs(configs: TypedFlatConfigItem[], map: Record<string, string>): TypedFlatConfigItem[] {
   return configs.map((i) => {
-    const clone = { ...i }
+    const clone = { ...i };
     if (clone.rules)
-      clone.rules = renameRules(clone.rules, map)
+      clone.rules = renameRules(clone.rules, map);
     if (clone.plugins) {
       clone.plugins = Object.fromEntries(
         Object.entries(clone.plugins)
           .map(([key, value]) => {
             if (key in map)
-              return [map[key], value]
-            return [key, value]
-          }),
-      )
+              return [map[key], value];
+            return [key, value];
+          })
+      );
     }
-    return clone
-  })
+    return clone;
+  });
 }
 
 export function toArray<T>(value: T | T[]): T[] {
-  return Array.isArray(value) ? value : [value]
+  return Array.isArray(value) ? value : [value];
 }
 
 export async function interopDefault<T>(m: Awaitable<T>): Promise<T extends { default: infer U } ? U : T> {
-  const resolved = await m
-  return (resolved as any).default || resolved
+  const resolved = await m;
+  return (resolved as any).default || resolved;
 }
 
 export function isPackageInScope(name: string): boolean {
-  return isPackageExists(name, { paths: [scopeUrl] })
+  return isPackageExists(name, { paths: [scopeUrl] });
 }
 
 export async function ensurePackages(packages: (string | undefined)[]): Promise<void> {
   if (process.env.CI || !process.stdout.isTTY || !isCwdInScope)
-    return
+    return;
 
-  const nonExistingPackages = packages.filter(i => i && !isPackageInScope(i)) as string[]
+  const nonExistingPackages = packages.filter(i => i && !isPackageInScope(i)) as string[];
   if (nonExistingPackages.length === 0)
-    return
+    return;
 
-  const p = await import('@clack/prompts')
+  const p = await import('@clack/prompts');
   const result = await p.confirm({
-    message: `${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}. Do you want to install them?`,
-  })
+    message: `${nonExistingPackages.length === 1 ? 'Package is' : 'Packages are'} required for this config: ${nonExistingPackages.join(', ')}. Do you want to install them?`
+  });
   if (result)
-    await import('@antfu/install-pkg').then(i => i.installPackage(nonExistingPackages, { dev: true }))
+    await import('@antfu/install-pkg').then(i => i.installPackage(nonExistingPackages, { dev: true }));
 }
 
 export function isInEditorEnv(): boolean {
   if (process.env.CI)
-    return false
+    return false;
   if (isInGitHooksOrLintStaged())
-    return false
-  return !!(process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM || process.env.NVIM)
+    return false;
+  return !!(process.env.VSCODE_PID || process.env.VSCODE_CWD || process.env.JETBRAINS_IDE || process.env.VIM || process.env.NVIM);
 }
 
 export function isInGitHooksOrLintStaged(): boolean {
-  return !!(process.env.GIT_PARAMS || process.env.VSCODE_GIT_COMMAND || process.env.npm_lifecycle_script?.startsWith('lint-staged'))
+  return !!(process.env.GIT_PARAMS || process.env.VSCODE_GIT_COMMAND || process.env.npm_lifecycle_script?.startsWith('lint-staged'));
 }

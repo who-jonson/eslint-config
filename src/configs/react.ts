@@ -1,72 +1,72 @@
-import type { OptionsFiles, OptionsOverrides, OptionsTypeScriptParserOptions, OptionsTypeScriptWithTypes, TypedFlatConfigItem } from '../types'
+import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem, OptionsTypeScriptWithTypes, OptionsTypeScriptParserOptions } from '../types';
 
-import { isPackageExists } from 'local-pkg'
-import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_SRC, GLOB_TS, GLOB_TSX } from '../globs'
+import { isPackageExists } from 'local-pkg';
+import { GLOB_TS, GLOB_SRC, GLOB_TSX, GLOB_ASTRO_TS, GLOB_MARKDOWN } from '../globs';
 
-import { ensurePackages, interopDefault } from '../utils'
+import { ensurePackages, interopDefault } from '../utils';
 
 // react refresh
 const ReactRefreshAllowConstantExportPackages = [
-  'vite',
-]
+  'vite'
+];
 const RemixPackages = [
   '@remix-run/node',
   '@remix-run/react',
   '@remix-run/serve',
-  '@remix-run/dev',
-]
+  '@remix-run/dev'
+];
 const ReactRouterPackages = [
   '@react-router/node',
   '@react-router/react',
   '@react-router/serve',
-  '@react-router/dev',
-]
+  '@react-router/dev'
+];
 const NextJsPackages = [
-  'next',
-]
+  'next'
+];
 
 export async function react(
-  options: OptionsTypeScriptParserOptions & OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles = {},
+  options: OptionsTypeScriptParserOptions & OptionsTypeScriptWithTypes & OptionsOverrides & OptionsFiles = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     files = [GLOB_SRC],
     filesTypeAware = [GLOB_TS, GLOB_TSX],
     ignoresTypeAware = [
       `${GLOB_MARKDOWN}/**`,
-      GLOB_ASTRO_TS,
+      GLOB_ASTRO_TS
     ],
     overrides = {},
-    tsconfigPath,
-  } = options
+    tsconfigPath
+  } = options;
 
   await ensurePackages([
     '@eslint-react/eslint-plugin',
     'eslint-plugin-react-hooks',
-    'eslint-plugin-react-refresh',
-  ])
+    'eslint-plugin-react-refresh'
+  ]);
 
-  const isTypeAware = !!tsconfigPath
+  const isTypeAware = !!tsconfigPath;
 
   const typeAwareRules: TypedFlatConfigItem['rules'] = {
-    'react/no-leaked-conditional-rendering': 'warn',
-  }
+    'react/no-leaked-conditional-rendering': 'warn'
+  };
 
   const [
     pluginReact,
     pluginReactHooks,
-    pluginReactRefresh,
+    pluginReactRefresh
   ] = await Promise.all([
     interopDefault(import('@eslint-react/eslint-plugin')),
     interopDefault(import('eslint-plugin-react-hooks')),
-    interopDefault(import('eslint-plugin-react-refresh')),
-  ] as const)
+    interopDefault(import('eslint-plugin-react-refresh'))
+  ] as const);
 
-  const isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some(i => isPackageExists(i))
-  const isUsingRemix = RemixPackages.some(i => isPackageExists(i))
-  const isUsingReactRouter = ReactRouterPackages.some(i => isPackageExists(i))
-  const isUsingNext = NextJsPackages.some(i => isPackageExists(i))
+  const isAllowConstantExport = ReactRefreshAllowConstantExportPackages.some(i => isPackageExists(i));
+  const isUsingRemix = RemixPackages.some(i => isPackageExists(i));
+  const isUsingReactRouter = ReactRouterPackages.some(i => isPackageExists(i));
+  const isUsingNext = NextJsPackages.some(i => isPackageExists(i));
 
-  const plugins = pluginReact.configs.all.plugins
+  const plugins = pluginReact.configs.all.plugins;
 
   return [
     {
@@ -78,18 +78,18 @@ export async function react(
         'react-hooks-extra': plugins['@eslint-react/hooks-extra'],
         'react-naming-convention': plugins['@eslint-react/naming-convention'],
         'react-refresh': pluginReactRefresh,
-        'react-web-api': plugins['@eslint-react/web-api'],
-      },
+        'react-web-api': plugins['@eslint-react/web-api']
+      }
     },
     {
       files,
       languageOptions: {
         parserOptions: {
           ecmaFeatures: {
-            jsx: true,
-          },
+            jsx: true
+          }
         },
-        sourceType: 'module',
+        sourceType: 'module'
       },
       name: 'whoj/react/rules',
       rules: {
@@ -129,7 +129,7 @@ export async function react(
                     'metadata',
                     'generateMetadata',
                     'viewport',
-                    'generateViewport',
+                    'generateViewport'
                   ]
                 : []),
               ...(isUsingRemix || isUsingReactRouter
@@ -138,11 +138,11 @@ export async function react(
                     'links',
                     'headers',
                     'loader',
-                    'action',
+                    'action'
                   ]
-                : []),
-            ],
-          },
+                : [])
+            ]
+          }
         ],
         // recommended rules from @eslint-react/web-api
         'react-web-api/no-leaked-event-listener': 'warn',
@@ -195,8 +195,8 @@ export async function react(
         'react/prefer-shorthand-fragment': 'warn',
 
         // overrides
-        ...overrides,
-      },
+        ...overrides
+      }
     },
     ...isTypeAware
       ? [{
@@ -204,9 +204,9 @@ export async function react(
           ignores: ignoresTypeAware,
           name: 'whoj/react/type-aware-rules',
           rules: {
-            ...typeAwareRules,
-          },
+            ...typeAwareRules
+          }
         }]
-      : [],
-  ]
+      : []
+  ];
 }

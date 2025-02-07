@@ -1,18 +1,18 @@
-import type { OptionsStylistic, TypedFlatConfigItem } from '../types'
+import type { OptionsStylistic, TypedFlatConfigItem } from '../types';
 
-import { pluginAntfu, pluginImport } from '../plugins'
+import { pluginAntfu, pluginImport } from '../plugins';
 
 export async function imports(options: OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
   const {
-    stylistic = true,
-  } = options
+    stylistic = true
+  } = options;
 
   return [
     {
       name: 'whoj/imports/rules',
       plugins: {
         import: pluginImport,
-        whoj: pluginAntfu,
+        whoj: pluginAntfu
       },
       rules: {
         'import/consistent-type-specifier-style': ['error', 'prefer-top-level'],
@@ -29,10 +29,10 @@ export async function imports(options: OptionsStylistic = {}): Promise<TypedFlat
 
         ...stylistic
           ? {
-              'import/newline-after-import': ['error', { count: 1 }],
+              'import/newline-after-import': ['error', { count: 1 }]
             }
-          : {},
-      },
-    },
-  ]
+          : {}
+      }
+    }
+  ];
 }

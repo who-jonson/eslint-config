@@ -1,40 +1,40 @@
-import type { OptionsFiles, OptionsHasTypeScript, OptionsOverrides, OptionsTypeScriptWithTypes, TypedFlatConfigItem } from '../types'
-import { GLOB_JSX, GLOB_TSX } from '../globs'
+import type { OptionsFiles, OptionsOverrides, TypedFlatConfigItem, OptionsHasTypeScript, OptionsTypeScriptWithTypes } from '../types';
+import { GLOB_JSX, GLOB_TSX } from '../globs';
 
-import { ensurePackages, interopDefault, toArray } from '../utils'
+import { toArray, ensurePackages, interopDefault } from '../utils';
 
 export async function solid(
-  options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles & OptionsTypeScriptWithTypes = {},
+  options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles & OptionsTypeScriptWithTypes = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     files = [GLOB_JSX, GLOB_TSX],
     overrides = {},
-    typescript = true,
-  } = options
+    typescript = true
+  } = options;
 
   await ensurePackages([
-    'eslint-plugin-solid',
-  ])
+    'eslint-plugin-solid'
+  ]);
 
   const tsconfigPath = options?.tsconfigPath
     ? toArray(options.tsconfigPath)
-    : undefined
-  const isTypeAware = !!tsconfigPath
+    : undefined;
+  const isTypeAware = !!tsconfigPath;
 
   const [
     pluginSolid,
-    parserTs,
+    parserTs
   ] = await Promise.all([
     interopDefault(import('eslint-plugin-solid')),
-    interopDefault(import('@typescript-eslint/parser')),
-  ] as const)
+    interopDefault(import('@typescript-eslint/parser'))
+  ] as const);
 
   return [
     {
       name: 'whoj/solid/setup',
       plugins: {
-        solid: pluginSolid,
-      },
+        solid: pluginSolid
+      }
     },
     {
       files,
@@ -42,11 +42,11 @@ export async function solid(
         parser: parserTs,
         parserOptions: {
           ecmaFeatures: {
-            jsx: true,
+            jsx: true
           },
-          ...isTypeAware ? { project: tsconfigPath } : {},
+          ...isTypeAware ? { project: tsconfigPath } : {}
         },
-        sourceType: 'module',
+        sourceType: 'module'
       },
       name: 'whoj/solid/rules',
       rules: {
@@ -56,7 +56,7 @@ export async function solid(
           // if true, don't warn on ambiguously named event handlers like `onclick` or `onchange`
           ignoreCase: false,
           // if true, warn when spreading event handlers onto JSX. Enable for Solid < v1.6.
-          warnOnSpread: false,
+          warnOnSpread: false
         }],
         // these rules are mostly style suggestions
         'solid/imports': 'error',
@@ -78,12 +78,12 @@ export async function solid(
         ...typescript
           ? {
               'solid/jsx-no-undef': ['error', { typescriptEnabled: true }],
-              'solid/no-unknown-namespaces': 'off',
+              'solid/no-unknown-namespaces': 'off'
             }
           : {},
         // overrides
-        ...overrides,
-      },
-    },
-  ]
+        ...overrides
+      }
+    }
+  ];
 }

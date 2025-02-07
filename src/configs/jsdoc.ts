@@ -1,17 +1,17 @@
-import type { OptionsStylistic, TypedFlatConfigItem } from '../types'
+import type { OptionsStylistic, TypedFlatConfigItem } from '../types';
 
-import { interopDefault } from '../utils'
+import { interopDefault } from '../utils';
 
 export async function jsdoc(options: OptionsStylistic = {}): Promise<TypedFlatConfigItem[]> {
   const {
-    stylistic = true,
-  } = options
+    stylistic = true
+  } = options;
 
   return [
     {
       name: 'whoj/jsdoc/rules',
       plugins: {
-        jsdoc: await interopDefault(import('eslint-plugin-jsdoc')),
+        jsdoc: await interopDefault(import('eslint-plugin-jsdoc'))
       },
       rules: {
         'jsdoc/check-access': 'warn',
@@ -33,10 +33,10 @@ export async function jsdoc(options: OptionsStylistic = {}): Promise<TypedFlatCo
         ...stylistic
           ? {
               'jsdoc/check-alignment': 'warn',
-              'jsdoc/multiline-blocks': 'warn',
+              'jsdoc/multiline-blocks': 'warn'
             }
-          : {},
-      },
-    },
-  ]
+          : {}
+      }
+    }
+  ];
 }

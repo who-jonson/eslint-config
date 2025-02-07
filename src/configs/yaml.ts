@@ -1,41 +1,41 @@
-import type { OptionsFiles, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types'
-import { GLOB_YAML } from '../globs'
+import type { OptionsFiles, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types';
+import { GLOB_YAML } from '../globs';
 
-import { interopDefault } from '../utils'
+import { interopDefault } from '../utils';
 
 export async function yaml(
-  options: OptionsOverrides & OptionsStylistic & OptionsFiles = {},
+  options: OptionsOverrides & OptionsStylistic & OptionsFiles = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     files = [GLOB_YAML],
     overrides = {},
-    stylistic = true,
-  } = options
+    stylistic = true
+  } = options;
 
   const {
     indent = 2,
-    quotes = 'single',
-  } = typeof stylistic === 'boolean' ? {} : stylistic
+    quotes = 'single'
+  } = typeof stylistic === 'boolean' ? {} : stylistic;
 
   const [
     pluginYaml,
-    parserYaml,
+    parserYaml
   ] = await Promise.all([
     interopDefault(import('eslint-plugin-yml')),
-    interopDefault(import('yaml-eslint-parser')),
-  ] as const)
+    interopDefault(import('yaml-eslint-parser'))
+  ] as const);
 
   return [
     {
       name: 'whoj/yaml/setup',
       plugins: {
-        yaml: pluginYaml,
-      },
+        yaml: pluginYaml
+      }
     },
     {
       files,
       languageOptions: {
-        parser: parserYaml,
+        parser: parserYaml
       },
       name: 'whoj/yaml/rules',
       rules: {
@@ -62,12 +62,12 @@ export async function yaml(
               'yaml/key-spacing': 'error',
               'yaml/no-tab-indent': 'error',
               'yaml/quotes': ['error', { avoidEscape: true, prefer: quotes === 'backtick' ? 'single' : quotes }],
-              'yaml/spaced-comment': 'error',
+              'yaml/spaced-comment': 'error'
             }
           : {},
 
-        ...overrides,
-      },
-    },
-  ]
+        ...overrides
+      }
+    }
+  ];
 }

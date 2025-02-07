@@ -1,43 +1,43 @@
 import type {
+  OptionsVue,
   OptionsFiles,
-  OptionsHasTypeScript,
   OptionsOverrides,
   OptionsStylistic,
-  OptionsVue,
   TypedFlatConfigItem,
-} from '../types'
+  OptionsHasTypeScript
+} from '../types';
 
-import { mergeProcessors } from 'eslint-merge-processors'
-import { GLOB_VUE } from '../globs'
-import { interopDefault } from '../utils'
+import { mergeProcessors } from 'eslint-merge-processors';
+import { GLOB_VUE } from '../globs';
+import { interopDefault } from '../utils';
 
 export async function vue(
-  options: OptionsVue & OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {},
+  options: OptionsVue & OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsFiles = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     files = [GLOB_VUE],
     overrides = {},
     stylistic = true,
-    vueVersion = 3,
-  } = options
+    vueVersion = 3
+  } = options;
 
   const sfcBlocks = options.sfcBlocks === true
     ? {}
-    : options.sfcBlocks ?? {}
+    : options.sfcBlocks ?? {};
 
   const {
-    indent = 2,
-  } = typeof stylistic === 'boolean' ? {} : stylistic
+    indent = 2
+  } = typeof stylistic === 'boolean' ? {} : stylistic;
 
   const [
     pluginVue,
     parserVue,
-    processorVueBlocks,
+    processorVueBlocks
   ] = await Promise.all([
     interopDefault(import('eslint-plugin-vue')),
     interopDefault(import('vue-eslint-parser')),
-    interopDefault(import('eslint-processor-vue-blocks')),
-  ] as const)
+    interopDefault(import('eslint-processor-vue-blocks'))
+  ] as const);
 
   return [
     {
@@ -58,13 +58,13 @@ export async function vue(
           toRef: 'readonly',
           toRefs: 'readonly',
           watch: 'readonly',
-          watchEffect: 'readonly',
-        },
+          watchEffect: 'readonly'
+        }
       },
       name: 'whoj/vue/setup',
       plugins: {
-        vue: pluginVue,
-      },
+        vue: pluginVue
+      }
     },
     {
       files,
@@ -72,14 +72,14 @@ export async function vue(
         parser: parserVue,
         parserOptions: {
           ecmaFeatures: {
-            jsx: true,
+            jsx: true
           },
           extraFileExtensions: ['.vue'],
           parser: options.typescript
             ? await interopDefault(import('@typescript-eslint/parser')) as any
             : null,
-          sourceType: 'module',
-        },
+          sourceType: 'module'
+        }
       },
       name: 'whoj/vue/rules',
       processor: sfcBlocks === false
@@ -90,9 +90,9 @@ export async function vue(
               ...sfcBlocks,
               blocks: {
                 styles: true,
-                ...sfcBlocks.blocks,
-              },
-            }),
+                ...sfcBlocks.blocks
+              }
+            })
           ]),
       rules: {
         ...pluginVue.configs.base.rules as any,
@@ -101,18 +101,18 @@ export async function vue(
           ? {
               ...pluginVue.configs.essential.rules as any,
               ...pluginVue.configs['strongly-recommended'].rules as any,
-              ...pluginVue.configs.recommended.rules as any,
+              ...pluginVue.configs.recommended.rules as any
             }
           : {
               ...pluginVue.configs['vue3-essential'].rules as any,
               ...pluginVue.configs['vue3-strongly-recommended'].rules as any,
-              ...pluginVue.configs['vue3-recommended'].rules as any,
+              ...pluginVue.configs['vue3-recommended'].rules as any
             },
 
         'node/prefer-global/process': 'off',
         'ts/explicit-function-return-type': 'off',
         'vue/block-order': ['error', {
-          order: ['script', 'template', 'style'],
+          order: ['script', 'template', 'style']
         }],
 
         'vue/component-name-in-template-casing': ['error', 'PascalCase'],
@@ -121,7 +121,7 @@ export async function vue(
         'vue/component-tags-order': 'off',
         'vue/custom-event-name-casing': ['error', 'camelCase'],
         'vue/define-macros-order': ['error', {
-          order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots'],
+          order: ['defineOptions', 'defineProps', 'defineEmits', 'defineSlots']
         }],
         'vue/dot-location': ['error', 'property'],
         'vue/dot-notation': ['error', { allowKeywords: true }],
@@ -138,7 +138,7 @@ export async function vue(
           'error',
           'DebuggerStatement',
           'LabeledStatement',
-          'WithStatement',
+          'WithStatement'
         ],
         'vue/no-restricted-v-bind': ['error', '/^v-/'],
         'vue/no-setup-props-reactivity-loss': 'off',
@@ -151,8 +151,8 @@ export async function vue(
           'always',
           {
             avoidQuotes: true,
-            ignoreConstructors: false,
-          },
+            ignoreConstructors: false
+          }
         ],
         'vue/prefer-separate-static-class': 'error',
         'vue/prefer-template': 'error',
@@ -170,14 +170,14 @@ export async function vue(
               'vue/block-spacing': ['error', 'always'],
               'vue/block-tag-newline': ['error', {
                 multiline: 'always',
-                singleline: 'always',
+                singleline: 'always'
               }],
               'vue/brace-style': ['error', 'stroustrup', { allowSingleLine: true }],
               'vue/comma-dangle': ['error', 'always-multiline'],
               'vue/comma-spacing': ['error', { after: true, before: false }],
               'vue/comma-style': ['error', 'last'],
               'vue/html-comment-content-spacing': ['error', 'always', {
-                exceptions: ['-'],
+                exceptions: ['-']
               }],
               'vue/key-spacing': ['error', { afterColon: true, beforeColon: false }],
               'vue/keyword-spacing': ['error', { after: true, before: true }],
@@ -188,12 +188,12 @@ export async function vue(
               'vue/padding-line-between-blocks': ['error', 'always'],
               'vue/quote-props': ['error', 'consistent-as-needed'],
               'vue/space-in-parens': ['error', 'never'],
-              'vue/template-curly-spacing': 'error',
+              'vue/template-curly-spacing': 'error'
             }
           : {},
 
-        ...overrides,
-      },
-    },
-  ]
+        ...overrides
+      }
+    }
+  ];
 }

@@ -1,6 +1,6 @@
-import type { TypedFlatConfigItem } from '../types'
+import type { TypedFlatConfigItem } from '../types';
 
-import { GLOB_JSX, GLOB_TSX } from '../globs'
+import { GLOB_JSX, GLOB_TSX } from '../globs';
 
 export async function jsx(): Promise<TypedFlatConfigItem[]> {
   return [
@@ -9,11 +9,11 @@ export async function jsx(): Promise<TypedFlatConfigItem[]> {
       languageOptions: {
         parserOptions: {
           ecmaFeatures: {
-            jsx: true,
-          },
-        },
+            jsx: true
+          }
+        }
       },
-      name: 'whoj/jsx/setup',
-    },
-  ]
+      name: 'whoj/jsx/setup'
+    }
+  ];
 }

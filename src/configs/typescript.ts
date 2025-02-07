@@ -1,44 +1,44 @@
 import type {
-  OptionsComponentExts,
   OptionsFiles,
   OptionsOverrides,
   OptionsProjectType,
-  OptionsTypeScriptParserOptions,
-  OptionsTypeScriptWithTypes,
   TypedFlatConfigItem,
-} from '../types'
+  OptionsComponentExts,
+  OptionsTypeScriptWithTypes,
+  OptionsTypeScriptParserOptions
+} from '../types';
 
-import process from 'node:process'
-import { GLOB_ASTRO_TS, GLOB_MARKDOWN, GLOB_TS, GLOB_TSX } from '../globs'
-import { pluginAntfu } from '../plugins'
-import { interopDefault, renameRules } from '../utils'
+import process from 'node:process';
+import { GLOB_TS, GLOB_TSX, GLOB_ASTRO_TS, GLOB_MARKDOWN } from '../globs';
+import { pluginAntfu } from '../plugins';
+import { renameRules, interopDefault } from '../utils';
 
 export async function typescript(
-  options: OptionsFiles & OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions & OptionsProjectType = {},
+  options: OptionsFiles & OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions & OptionsProjectType = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     componentExts = [],
     overrides = {},
     overridesTypeAware = {},
     parserOptions = {},
-    type = 'app',
-  } = options
+    type = 'app'
+  } = options;
 
   const files = options.files ?? [
     GLOB_TS,
     GLOB_TSX,
-    ...componentExts.map(ext => `**/*.${ext}`),
-  ]
+    ...componentExts.map(ext => `**/*.${ext}`)
+  ];
 
-  const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX]
+  const filesTypeAware = options.filesTypeAware ?? [GLOB_TS, GLOB_TSX];
   const ignoresTypeAware = options.ignoresTypeAware ?? [
     `${GLOB_MARKDOWN}/**`,
-    GLOB_ASTRO_TS,
-  ]
+    GLOB_ASTRO_TS
+  ];
   const tsconfigPath = options?.tsconfigPath
     ? options.tsconfigPath
-    : undefined
-  const isTypeAware = !!tsconfigPath
+    : undefined;
+  const isTypeAware = !!tsconfigPath;
 
   const typeAwareRules: TypedFlatConfigItem['rules'] = {
     'dot-notation': 'off',
@@ -61,16 +61,16 @@ export async function typescript(
     'ts/return-await': ['error', 'in-try-catch'],
     'ts/strict-boolean-expressions': ['error', { allowNullableBoolean: true, allowNullableObject: true }],
     'ts/switch-exhaustiveness-check': 'error',
-    'ts/unbound-method': 'error',
-  }
+    'ts/unbound-method': 'error'
+  };
 
   const [
     pluginTs,
-    parserTs,
+    parserTs
   ] = await Promise.all([
     interopDefault(import('@typescript-eslint/eslint-plugin')),
-    interopDefault(import('@typescript-eslint/parser')),
-  ] as const)
+    interopDefault(import('@typescript-eslint/parser'))
+  ] as const);
 
   function makeParser(typeAware: boolean, files: string[], ignores?: string[]): TypedFlatConfigItem {
     return {
@@ -85,16 +85,16 @@ export async function typescript(
             ? {
                 projectService: {
                   allowDefaultProject: ['./*.js'],
-                  defaultProject: tsconfigPath,
+                  defaultProject: tsconfigPath
                 },
-                tsconfigRootDir: process.cwd(),
+                tsconfigRootDir: process.cwd()
               }
             : {},
-          ...parserOptions as any,
-        },
+          ...parserOptions as any
+        }
       },
-      name: `whoj/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
-    }
+      name: `whoj/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`
+    };
   }
 
   return [
@@ -103,17 +103,17 @@ export async function typescript(
       name: 'whoj/typescript/setup',
       plugins: {
         ts: pluginTs as any,
-        whoj: pluginAntfu,
-      },
+        whoj: pluginAntfu
+      }
     },
     // assign type-aware parser for type-aware files and type-unaware parser for the rest
     ...isTypeAware
       ? [
           makeParser(false, files),
-          makeParser(true, filesTypeAware, ignoresTypeAware),
+          makeParser(true, filesTypeAware, ignoresTypeAware)
         ]
       : [
-          makeParser(false, files),
+          makeParser(false, files)
         ],
     {
       files,
@@ -121,11 +121,11 @@ export async function typescript(
       rules: {
         ...renameRules(
           pluginTs.configs['eslint-recommended'].overrides![0].rules!,
-          { '@typescript-eslint': 'ts' },
+          { '@typescript-eslint': 'ts' }
         ),
         ...renameRules(
           pluginTs.configs.strict.rules!,
-          { '@typescript-eslint': 'ts' },
+          { '@typescript-eslint': 'ts' }
         ),
         'no-dupe-class-members': 'off',
         'no-redeclare': 'off',
@@ -136,7 +136,7 @@ export async function typescript(
         'ts/consistent-type-imports': ['error', {
           disallowTypeAnnotations: false,
           fixStyle: 'separate-type-imports',
-          prefer: 'type-imports',
+          prefer: 'type-imports'
         }],
 
         'ts/method-signature-style': ['error', 'property'], // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
@@ -153,7 +153,7 @@ export async function typescript(
         'ts/no-unused-expressions': ['error', {
           allowShortCircuit: true,
           allowTaggedTemplates: true,
-          allowTernary: true,
+          allowTernary: true
         }],
         'ts/no-unused-vars': 'off',
         'ts/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
@@ -167,13 +167,13 @@ export async function typescript(
               'ts/explicit-function-return-type': ['error', {
                 allowExpressions: true,
                 allowHigherOrderFunctions: true,
-                allowIIFEs: true,
-              }],
+                allowIIFEs: true
+              }]
             }
           : {}
         ),
-        ...overrides,
-      },
+        ...overrides
+      }
     },
     ...isTypeAware
       ? [{
@@ -182,9 +182,9 @@ export async function typescript(
           name: 'whoj/typescript/rules-type-aware',
           rules: {
             ...typeAwareRules,
-            ...overridesTypeAware,
-          },
+            ...overridesTypeAware
+          }
         }]
-      : [],
-  ]
+      : []
+  ];
 }

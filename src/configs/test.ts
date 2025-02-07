@@ -1,44 +1,44 @@
-import type { OptionsFiles, OptionsIsInEditor, OptionsOverrides, TypedFlatConfigItem } from '../types'
+import type { OptionsFiles, OptionsOverrides, OptionsIsInEditor, TypedFlatConfigItem } from '../types';
 
-import { GLOB_TESTS } from '../globs'
-import { interopDefault } from '../utils'
+import { GLOB_TESTS } from '../globs';
+import { interopDefault } from '../utils';
 
 // Hold the reference so we don't redeclare the plugin on each call
-let _pluginTest: any
+let _pluginTest: any;
 
 export async function test(
-  options: OptionsFiles & OptionsIsInEditor & OptionsOverrides = {},
+  options: OptionsFiles & OptionsIsInEditor & OptionsOverrides = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     files = GLOB_TESTS,
     isInEditor = false,
-    overrides = {},
-  } = options
+    overrides = {}
+  } = options;
 
   const [
     pluginVitest,
-    pluginNoOnlyTests,
+    pluginNoOnlyTests
   ] = await Promise.all([
     interopDefault(import('@vitest/eslint-plugin')),
     // @ts-expect-error missing types
-    interopDefault(import('eslint-plugin-no-only-tests')),
-  ] as const)
+    interopDefault(import('eslint-plugin-no-only-tests'))
+  ] as const);
 
   _pluginTest = _pluginTest || {
     ...pluginVitest,
     rules: {
       ...pluginVitest.rules,
       // extend `test/no-only-tests` rule
-      ...pluginNoOnlyTests.rules,
-    },
-  }
+      ...pluginNoOnlyTests.rules
+    }
+  };
 
   return [
     {
       name: 'whoj/test/setup',
       plugins: {
-        test: _pluginTest,
-      },
+        test: _pluginTest
+      }
     },
     {
       files,
@@ -57,11 +57,11 @@ export async function test(
           'no-unused-expressions': 'off',
           'node/prefer-global/process': 'off',
           'ts/explicit-function-return-type': 'off',
-          'whoj/no-top-level-await': 'off',
+          'whoj/no-top-level-await': 'off'
         },
 
-        ...overrides,
-      },
-    },
-  ]
+        ...overrides
+      }
+    }
+  ];
 }

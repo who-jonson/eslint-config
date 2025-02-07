@@ -1,40 +1,40 @@
-import type { OptionsFiles, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types'
+import type { OptionsFiles, OptionsOverrides, OptionsStylistic, TypedFlatConfigItem } from '../types';
 
-import { GLOB_TOML } from '../globs'
-import { interopDefault } from '../utils'
+import { GLOB_TOML } from '../globs';
+import { interopDefault } from '../utils';
 
 export async function toml(
-  options: OptionsOverrides & OptionsStylistic & OptionsFiles = {},
+  options: OptionsOverrides & OptionsStylistic & OptionsFiles = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     files = [GLOB_TOML],
     overrides = {},
-    stylistic = true,
-  } = options
+    stylistic = true
+  } = options;
 
   const {
-    indent = 2,
-  } = typeof stylistic === 'boolean' ? {} : stylistic
+    indent = 2
+  } = typeof stylistic === 'boolean' ? {} : stylistic;
 
   const [
     pluginToml,
-    parserToml,
+    parserToml
   ] = await Promise.all([
     interopDefault(import('eslint-plugin-toml')),
-    interopDefault(import('toml-eslint-parser')),
-  ] as const)
+    interopDefault(import('toml-eslint-parser'))
+  ] as const);
 
   return [
     {
       name: 'whoj/toml/setup',
       plugins: {
-        toml: pluginToml,
-      },
+        toml: pluginToml
+      }
     },
     {
       files,
       languageOptions: {
-        parser: parserToml,
+        parser: parserToml
       },
       name: 'whoj/toml/rules',
       rules: {
@@ -62,12 +62,12 @@ export async function toml(
               'toml/padding-line-between-tables': 'error',
               'toml/quoted-keys': 'error',
               'toml/spaced-comment': 'error',
-              'toml/table-bracket-spacing': 'error',
+              'toml/table-bracket-spacing': 'error'
             }
           : {},
 
-        ...overrides,
-      },
-    },
-  ]
+        ...overrides
+      }
+    }
+  ];
 }
