@@ -35,16 +35,12 @@
     "prepare": "simple-git-hooks"
   },
   "peerDependencies": {
-    "@nuxt/eslint-config": "^1.0.1",
     "@prettier/plugin-xml": "^3.4.1",
     "@unocss/eslint-plugin": ">=0.50.0",
     "eslint": "^9.19.0",
     "eslint-plugin-format": ">=0.1.0"
   },
   "peerDependenciesMeta": {
-    "@nuxt/eslint-config": {
-      "optional": true
-    },
     "@prettier/plugin-xml": {
       "optional": true
     },
@@ -63,6 +59,7 @@
     "@clack/prompts": "^0.9.1",
     "@eslint-community/eslint-plugin-eslint-comments": "^4.4.1",
     "@eslint/markdown": "^6.2.2",
+    "@nuxt/eslint-config": "^1.0.1",
     "@stylistic/eslint-plugin": "^3.0.1",
     "@typescript-eslint/eslint-plugin": "^8.22.0",
     "@typescript-eslint/parser": "^8.22.0",
