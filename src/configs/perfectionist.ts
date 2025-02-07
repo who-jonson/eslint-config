@@ -7,7 +7,7 @@ import { pluginPerfectionist } from '../plugins';
  *
  * @see https://github.com/azat-io/eslint-plugin-perfectionist
  */
-export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
+export function perfectionist(): TypedFlatConfigItem[] {
   return [
     {
       name: 'whoj/perfectionist/setup',
@@ -15,7 +15,7 @@ export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
         perfectionist: pluginPerfectionist
       },
       rules: {
-        'perfectionist/sort-exports': ['error', { order: 'asc', type: 'natural' }],
+        'perfectionist/sort-exports': ['error', { order: 'asc', type: 'line-length' }],
         'perfectionist/sort-imports': ['error', {
           groups: [
             'type',
@@ -31,10 +31,10 @@ export async function perfectionist(): Promise<TypedFlatConfigItem[]> {
           ],
           newlinesBetween: 'ignore',
           order: 'asc',
-          type: 'natural'
+          type: 'line-length'
         }],
-        'perfectionist/sort-named-exports': ['error', { order: 'asc', type: 'natural' }],
-        'perfectionist/sort-named-imports': ['error', { order: 'asc', type: 'natural' }]
+        'perfectionist/sort-named-exports': ['error', { order: 'asc', type: 'line-length' }],
+        'perfectionist/sort-named-imports': ['error', { order: 'asc', type: 'line-length' }]
       }
     }
   ];

@@ -111,6 +111,16 @@ export function whoj(
       ? options.stylistic
       : {};
 
+  if (stylisticOptions) {
+    stylisticOptions.overrides = {
+      ...(stylisticOptions.overrides || {}),
+      'style/comma-dangle': ['error', 'never'],
+      'style/quotes': ['error', 'single'],
+      'style/semi': [2, 'always'],
+      'style/spaced-comment': 'off'
+    };
+  }
+
   if (stylisticOptions && !('jsx' in stylisticOptions))
     stylisticOptions.jsx = enableJsx;
 

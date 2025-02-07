@@ -27,9 +27,8 @@ export async function jsdoc(options: OptionsStylistic = {}): Promise<TypedFlatCo
         'jsdoc/require-property-description': 'warn',
         'jsdoc/require-property-name': 'warn',
         'jsdoc/require-returns-check': 'warn',
-        'jsdoc/require-returns-description': 'warn',
+        'jsdoc/require-returns-description': 'off',
         'jsdoc/require-yields-check': 'warn',
-
         ...stylistic
           ? {
               'jsdoc/check-alignment': 'warn',

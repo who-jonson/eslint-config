@@ -131,7 +131,7 @@ export async function typescript(
         'no-redeclare': 'off',
         'no-use-before-define': 'off',
         'no-useless-constructor': 'off',
-        'ts/ban-ts-comment': ['error', { 'ts-expect-error': 'allow-with-description' }],
+        'ts/ban-ts-comment': 'off',
         'ts/consistent-type-definitions': ['error', 'interface'],
         'ts/consistent-type-imports': ['error', {
           disallowTypeAnnotations: false,
@@ -139,10 +139,11 @@ export async function typescript(
           prefer: 'type-imports'
         }],
 
-        'ts/method-signature-style': ['error', 'property'], // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
+        'ts/explicit-function-return-type': ['off'],
+        'ts/method-signature-style': ['warn', 'property'], // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
         'ts/no-dupe-class-members': 'error',
         'ts/no-dynamic-delete': 'off',
-        'ts/no-empty-object-type': ['error', { allowInterfaces: 'always' }],
+        'ts/no-empty-object-type': ['warn', { allowInterfaces: 'always' }],
         'ts/no-explicit-any': 'off',
         'ts/no-extraneous-class': 'off',
         'ts/no-import-type-side-effects': 'error',
@@ -150,11 +151,13 @@ export async function typescript(
         'ts/no-non-null-assertion': 'off',
         'ts/no-redeclare': ['error', { builtinGlobals: false }],
         'ts/no-require-imports': 'error',
-        'ts/no-unused-expressions': ['error', {
+        'ts/no-unsafe-function-type': ['off'],
+        'ts/no-unused-expressions': ['warn', {
           allowShortCircuit: true,
           allowTaggedTemplates: true,
           allowTernary: true
         }],
+
         'ts/no-unused-vars': 'off',
         'ts/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
         'ts/no-useless-constructor': 'off',
