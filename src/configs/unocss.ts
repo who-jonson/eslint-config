@@ -6,8 +6,8 @@ export async function unocss(
   options: OptionsUnoCSS = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
-    attributify = true,
-    strict = false
+    strict = false,
+    attributify = true
   } = options;
 
   await ensurePackages([

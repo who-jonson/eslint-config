@@ -19,13 +19,13 @@ export interface CliRunOptions {
    */
   yes?: boolean;
   /**
-   * Use the framework template for optimal customization: vue / react / svelte / astro
-   */
-  frameworks?: string[];
-  /**
    * Use the extra utils: formatter / perfectionist / unocss
    */
   extra?: string[];
+  /**
+   * Use the framework template for optimal customization: vue / react / svelte / astro
+   */
+  frameworks?: string[];
 }
 
 export async function run(options: CliRunOptions = {}): Promise<void> {

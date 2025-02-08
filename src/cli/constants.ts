@@ -60,28 +60,28 @@ export const vscodeSettingsString = `
 
 export const frameworkOptions: PromItem<FrameworkOption>[] = [
   {
-    label: c.green('Vue'),
-    value: 'vue'
+    value: 'vue',
+    label: c.green('Vue')
   },
   {
-    label: c.cyan('React'),
-    value: 'react'
+    value: 'react',
+    label: c.cyan('React')
   },
   {
-    label: c.red('Svelte'),
-    value: 'svelte'
+    value: 'svelte',
+    label: c.red('Svelte')
   },
   {
-    label: c.magenta('Astro'),
-    value: 'astro'
+    value: 'astro',
+    label: c.magenta('Astro')
   },
   {
-    label: c.cyan('Solid'),
-    value: 'solid'
+    value: 'solid',
+    label: c.cyan('Solid')
   },
   {
-    label: c.blue('Slidev'),
-    value: 'slidev'
+    value: 'slidev',
+    label: c.blue('Slidev')
   }
 ];
 
@@ -89,37 +89,37 @@ export const frameworks: FrameworkOption[] = frameworkOptions.map(({ value }) =>
 
 export const extraOptions: PromItem<ExtraLibrariesOption>[] = [
   {
-    hint: 'Use external formatters (Prettier and/or dprint) to format files that ESLint cannot handle yet (.css, .html, etc)',
+    value: 'formatter',
     label: c.red('Formatter'),
-    value: 'formatter'
+    hint: 'Use external formatters (Prettier and/or dprint) to format files that ESLint cannot handle yet (.css, .html, etc)'
   },
   {
-    label: c.cyan('UnoCSS'),
-    value: 'unocss'
+    value: 'unocss',
+    label: c.cyan('UnoCSS')
   }
 ];
 
 export const extra: ExtraLibrariesOption[] = extraOptions.map(({ value }) => (value));
 
 export const dependenciesMap = {
-  astro: [
-    'eslint-plugin-astro',
-    'astro-eslint-parser'
-  ],
-  react: [
-    '@eslint-react/eslint-plugin',
-    'eslint-plugin-react-hooks',
-    'eslint-plugin-react-refresh'
+  vue: [],
+  solid: [
+    'eslint-plugin-solid'
   ],
   slidev: [
     'prettier-plugin-slidev'
   ],
-  solid: [
-    'eslint-plugin-solid'
+  astro: [
+    'eslint-plugin-astro',
+    'astro-eslint-parser'
   ],
   svelte: [
     'eslint-plugin-svelte',
     'svelte-eslint-parser'
   ],
-  vue: []
+  react: [
+    '@eslint-react/eslint-plugin',
+    'eslint-plugin-react-hooks',
+    'eslint-plugin-react-refresh'
+  ]
 } as const;

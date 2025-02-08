@@ -21,19 +21,19 @@ const instance = yargs(hideBin(process.argv))
     args => args
       .option('yes', {
         alias: 'y',
-        description: 'Skip prompts and use default values',
-        type: 'boolean'
+        type: 'boolean',
+        description: 'Skip prompts and use default values'
       })
       .option('template', {
         alias: 't',
-        description: 'Use the framework template for optimal customization: vue / react / svelte / astro',
-        type: 'string'
+        type: 'string',
+        description: 'Use the framework template for optimal customization: vue / react / svelte / astro'
       })
       .option('extra', {
         alias: 'e',
         array: true,
-        description: 'Use the extra utils: formatter / perfectionist / unocss',
-        type: 'string'
+        type: 'string',
+        description: 'Use the extra utils: formatter / perfectionist / unocss'
       })
       .help(),
     async (args) => {

@@ -4,12 +4,12 @@ import { GLOB_JSX, GLOB_TSX } from '../globs';
 import { toArray, ensurePackages, interopDefault } from '../utils';
 
 export async function solid(
-  options: OptionsHasTypeScript & OptionsOverrides & OptionsFiles & OptionsTypeScriptWithTypes = {}
+  options: OptionsFiles & OptionsOverrides & OptionsHasTypeScript & OptionsTypeScriptWithTypes = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
-    files = [GLOB_JSX, GLOB_TSX],
     overrides = {},
-    typescript = true
+    typescript = true,
+    files = [GLOB_JSX, GLOB_TSX]
   } = options;
 
   await ensurePackages([
@@ -38,47 +38,47 @@ export async function solid(
     },
     {
       files,
+      name: 'whoj/solid/rules',
       languageOptions: {
         parser: parserTs,
+        sourceType: 'module',
         parserOptions: {
           ecmaFeatures: {
             jsx: true
           },
           ...isTypeAware ? { project: tsconfigPath } : {}
-        },
-        sourceType: 'module'
+        }
       },
-      name: 'whoj/solid/rules',
       rules: {
+        // these rules are mostly style suggestions
+        'solid/imports': 'error',
+        'solid/reactivity': 'warn',
+        'solid/prefer-for': 'error',
+        'solid/jsx-no-undef': 'error',
+        'solid/jsx-uses-vars': 'error',
+        'solid/no-react-deps': 'error',
+        'solid/no-destructure': 'error',
+        'solid/jsx-no-script-url': 'error',
+        'solid/self-closing-comp': 'error',
         // reactivity
         'solid/components-return-once': 'warn',
+        'solid/no-unknown-namespaces': 'error',
+        // identifier usage is important
+        'solid/jsx-no-duplicate-props': 'error',
+        'solid/no-react-specific-props': 'error',
+        // security problems
+        'solid/no-innerhtml': ['error', { allowStatic: true }],
+        'solid/style-prop': ['error', { styleProps: ['style', 'css'] }],
         'solid/event-handlers': ['error', {
           // if true, don't warn on ambiguously named event handlers like `onclick` or `onchange`
           ignoreCase: false,
           // if true, warn when spreading event handlers onto JSX. Enable for Solid < v1.6.
           warnOnSpread: false
         }],
-        // these rules are mostly style suggestions
-        'solid/imports': 'error',
-        // identifier usage is important
-        'solid/jsx-no-duplicate-props': 'error',
-        'solid/jsx-no-script-url': 'error',
-        'solid/jsx-no-undef': 'error',
-        'solid/jsx-uses-vars': 'error',
-        'solid/no-destructure': 'error',
-        // security problems
-        'solid/no-innerhtml': ['error', { allowStatic: true }],
-        'solid/no-react-deps': 'error',
-        'solid/no-react-specific-props': 'error',
-        'solid/no-unknown-namespaces': 'error',
-        'solid/prefer-for': 'error',
-        'solid/reactivity': 'warn',
-        'solid/self-closing-comp': 'error',
-        'solid/style-prop': ['error', { styleProps: ['style', 'css'] }],
         ...typescript
           ? {
-              'solid/jsx-no-undef': ['error', { typescriptEnabled: true }],
-              'solid/no-unknown-namespaces': 'off'
+              'solid/no-unknown-namespaces': 'off',
+              'solid/jsx-no-undef': ['error', { typescriptEnabled: true }]
             }
           : {},
         // overrides

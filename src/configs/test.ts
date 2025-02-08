@@ -7,12 +7,12 @@ import { interopDefault } from '../utils';
 let _pluginTest: any;
 
 export async function test(
-  options: OptionsFiles & OptionsIsInEditor & OptionsOverrides = {}
+  options: OptionsFiles & OptionsOverrides & OptionsIsInEditor = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
+    overrides = {},
     files = GLOB_TESTS,
-    isInEditor = false,
-    overrides = {}
+    isInEditor = false
   } = options;
 
   const [
@@ -44,20 +44,20 @@ export async function test(
       files,
       name: 'whoj/test/rules',
       rules: {
-        'test/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
         'test/no-identical-title': 'error',
         'test/no-import-node-test': 'error',
-        'test/no-only-tests': isInEditor ? 'warn' : 'error',
-
         'test/prefer-hooks-in-order': 'error',
         'test/prefer-lowercase-title': 'error',
+
+        'test/no-only-tests': isInEditor ? 'warn' : 'error',
+        'test/consistent-test-it': ['error', { fn: 'it', withinDescribe: 'it' }],
 
         // Disables
         ...{
           'no-unused-expressions': 'off',
+          'whoj/no-top-level-await': 'off',
           'node/prefer-global/process': 'off',
-          'ts/explicit-function-return-type': 'off',
-          'whoj/no-top-level-await': 'off'
+          'ts/explicit-function-return-type': 'off'
         },
 
         ...overrides

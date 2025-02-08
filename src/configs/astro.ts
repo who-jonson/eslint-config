@@ -4,12 +4,12 @@ import { GLOB_ASTRO } from '../globs';
 import { interopDefault } from '../utils';
 
 export async function astro(
-  options: OptionsOverrides & OptionsStylistic & OptionsFiles = {}
+  options: OptionsFiles & OptionsOverrides & OptionsStylistic = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
-    files = [GLOB_ASTRO],
     overrides = {},
-    stylistic = true
+    stylistic = true,
+    files = [GLOB_ASTRO]
   } = options;
 
   const [
@@ -31,40 +31,40 @@ export async function astro(
     },
     {
       files,
-      languageOptions: {
-        globals: pluginAstro.environments.astro.globals,
-        parser: parserAstro,
-        parserOptions: {
-          extraFileExtensions: ['.astro'],
-          parser: parserTs
-        },
-        sourceType: 'module'
-      },
       name: 'whoj/astro/rules',
       processor: 'astro/client-side-ts',
+      languageOptions: {
+        parser: parserAstro,
+        sourceType: 'module',
+        globals: pluginAstro.environments.astro.globals,
+        parserOptions: {
+          parser: parserTs,
+          extraFileExtensions: ['.astro']
+        }
+      },
       rules: {
-        // use recommended rules
-        'astro/missing-client-only-directive-value': 'error',
-
-        'astro/no-conflict-set-directives': 'error',
-        'astro/no-deprecated-astro-canonicalurl': 'error',
-        'astro/no-deprecated-astro-fetchcontent': 'error',
-        'astro/no-deprecated-astro-resolve': 'error',
-        'astro/no-deprecated-getentrybyslug': 'error',
-        'astro/no-set-html-directive': 'off',
-        'astro/no-unused-define-vars-in-style': 'error',
         'astro/semi': 'off',
+
         'astro/valid-compile': 'error',
         // Astro uses top level await for e.g. data fetching
         // https://docs.astro.build/en/guides/data-fetching/#fetch-in-astro
         'whoj/no-top-level-await': 'off',
+        'astro/no-set-html-directive': 'off',
+        'astro/no-conflict-set-directives': 'error',
+        'astro/no-deprecated-astro-resolve': 'error',
+        'astro/no-deprecated-getentrybyslug': 'error',
+        'astro/no-unused-define-vars-in-style': 'error',
+        'astro/no-deprecated-astro-canonicalurl': 'error',
+        'astro/no-deprecated-astro-fetchcontent': 'error',
+        // use recommended rules
+        'astro/missing-client-only-directive-value': 'error',
 
         ...stylistic
           ? {
               'style/indent': 'off',
+              'style/no-multiple-empty-lines': 'off',
               'style/jsx-closing-tag-location': 'off',
-              'style/jsx-one-expression-per-line': 'off',
-              'style/no-multiple-empty-lines': 'off'
+              'style/jsx-one-expression-per-line': 'off'
             }
           : {},
 

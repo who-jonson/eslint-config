@@ -1,12 +1,12 @@
+export type ExtraLibrariesOption = 'unocss' | 'formatter';
+
 export interface PromItem<T> {
-  label: string;
   value: T;
+  label: string;
   hint?: string;
 }
 
-export type FrameworkOption = 'vue' | 'react' | 'svelte' | 'astro' | 'solid' | 'slidev';
-
-export type ExtraLibrariesOption = 'formatter' | 'unocss';
+export type FrameworkOption = 'vue' | 'react' | 'astro' | 'solid' | 'svelte' | 'slidev';
 
 export interface PromptResult {
   uncommittedConfirmed: boolean;

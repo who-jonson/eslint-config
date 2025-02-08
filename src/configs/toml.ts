@@ -4,12 +4,12 @@ import { GLOB_TOML } from '../globs';
 import { interopDefault } from '../utils';
 
 export async function toml(
-  options: OptionsOverrides & OptionsStylistic & OptionsFiles = {}
+  options: OptionsFiles & OptionsOverrides & OptionsStylistic = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
-    files = [GLOB_TOML],
     overrides = {},
-    stylistic = true
+    stylistic = true,
+    files = [GLOB_TOML]
   } = options;
 
   const {
@@ -33,36 +33,36 @@ export async function toml(
     },
     {
       files,
+      name: 'whoj/toml/rules',
       languageOptions: {
         parser: parserToml
       },
-      name: 'whoj/toml/rules',
       rules: {
-        'style/spaced-comment': 'off',
+        'toml/keys-order': 'error',
 
         'toml/comma-style': 'error',
-        'toml/keys-order': 'error',
+        'toml/tables-order': 'error',
+        'style/spaced-comment': 'off',
         'toml/no-space-dots': 'error',
+        'toml/precision-of-integer': 'error',
         'toml/no-unreadable-number-separator': 'error',
         'toml/precision-of-fractional-seconds': 'error',
-        'toml/precision-of-integer': 'error',
-        'toml/tables-order': 'error',
 
         'toml/vue-custom-block/no-parsing-error': 'error',
 
         ...stylistic
           ? {
+              'toml/key-spacing': 'error',
+              'toml/quoted-keys': 'error',
+              'toml/spaced-comment': 'error',
               'toml/array-bracket-newline': 'error',
               'toml/array-bracket-spacing': 'error',
               'toml/array-element-newline': 'error',
-              'toml/indent': ['error', indent === 'tab' ? 2 : indent],
+              'toml/table-bracket-spacing': 'error',
               'toml/inline-table-curly-spacing': 'error',
-              'toml/key-spacing': 'error',
               'toml/padding-line-between-pairs': 'error',
               'toml/padding-line-between-tables': 'error',
-              'toml/quoted-keys': 'error',
-              'toml/spaced-comment': 'error',
-              'toml/table-bracket-spacing': 'error'
+              'toml/indent': ['error', indent === 'tab' ? 2 : indent]
             }
           : {},
 

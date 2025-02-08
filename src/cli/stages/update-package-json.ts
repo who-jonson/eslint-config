@@ -31,6 +31,14 @@ export async function updatePackageJson(result: PromptResult): Promise<void> {
   if (result.extra.length) {
     result.extra.forEach((item: ExtraLibrariesOption) => {
       switch (item) {
+        case 'unocss':
+          (<const>[
+            '@unocss/eslint-plugin'
+          ]).forEach((f) => {
+            pkg.devDependencies[f] = pkgJson.devDependencies[f];
+            addedPackages.push(f);
+          });
+          break;
         case 'formatter':
           (<const>[
             'eslint-plugin-format',
@@ -38,14 +46,6 @@ export async function updatePackageJson(result: PromptResult): Promise<void> {
           ]).forEach((f) => {
             if (!f)
               return;
-            pkg.devDependencies[f] = pkgJson.devDependencies[f];
-            addedPackages.push(f);
-          });
-          break;
-        case 'unocss':
-          (<const>[
-            '@unocss/eslint-plugin'
-          ]).forEach((f) => {
             pkg.devDependencies[f] = pkgJson.devDependencies[f];
             addedPackages.push(f);
           });

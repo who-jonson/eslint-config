@@ -4,12 +4,12 @@ import { GLOB_YAML } from '../globs';
 import { interopDefault } from '../utils';
 
 export async function yaml(
-  options: OptionsOverrides & OptionsStylistic & OptionsFiles = {}
+  options: OptionsFiles & OptionsOverrides & OptionsStylistic = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
-    files = [GLOB_YAML],
     overrides = {},
-    stylistic = true
+    stylistic = true,
+    files = [GLOB_YAML]
   } = options;
 
   const {
@@ -34,35 +34,35 @@ export async function yaml(
     },
     {
       files,
+      name: 'whoj/yaml/rules',
       languageOptions: {
         parser: parserYaml
       },
-      name: 'whoj/yaml/rules',
       rules: {
-        'style/spaced-comment': 'off',
+        'yaml/no-empty-key': 'error',
 
+        'yaml/plain-scalar': 'error',
+        'style/spaced-comment': 'off',
         'yaml/block-mapping': 'error',
         'yaml/block-sequence': 'error',
-        'yaml/no-empty-key': 'error',
         'yaml/no-empty-sequence-entry': 'error',
         'yaml/no-irregular-whitespace': 'error',
-        'yaml/plain-scalar': 'error',
 
         'yaml/vue-custom-block/no-parsing-error': 'error',
 
         ...stylistic
           ? {
-              'yaml/block-mapping-question-indicator-newline': 'error',
-              'yaml/block-sequence-hyphen-indicator-newline': 'error',
+              'yaml/key-spacing': 'error',
+              'yaml/no-tab-indent': 'error',
+              'yaml/spaced-comment': 'error',
               'yaml/flow-mapping-curly-newline': 'error',
               'yaml/flow-mapping-curly-spacing': 'error',
               'yaml/flow-sequence-bracket-newline': 'error',
               'yaml/flow-sequence-bracket-spacing': 'error',
+              'yaml/block-sequence-hyphen-indicator-newline': 'error',
               'yaml/indent': ['error', indent === 'tab' ? 2 : indent],
-              'yaml/key-spacing': 'error',
-              'yaml/no-tab-indent': 'error',
-              'yaml/quotes': ['error', { avoidEscape: true, prefer: quotes === 'backtick' ? 'single' : quotes }],
-              'yaml/spaced-comment': 'error'
+              'yaml/block-mapping-question-indicator-newline': 'error',
+              'yaml/quotes': ['error', { avoidEscape: true, prefer: quotes === 'backtick' ? 'single' : quotes }]
             }
           : {},
 

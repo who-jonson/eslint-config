@@ -64,18 +64,44 @@ const VuePackages = [
 ];
 
 export const defaultPluginRenaming = {
-  '@eslint-react': 'react',
-  '@eslint-react/dom': 'react-dom',
-  '@eslint-react/hooks-extra': 'react-hooks-extra',
-  '@eslint-react/naming-convention': 'react-naming-convention',
+  'n': 'node',
+  'yml': 'yaml',
+  'vitest': 'test',
+  'import-x': 'import',
 
   '@stylistic': 'style',
+  '@eslint-react': 'react',
   '@typescript-eslint': 'ts',
-  'import-x': 'import',
-  'n': 'node',
-  'vitest': 'test',
-  'yml': 'yaml'
+  '@eslint-react/dom': 'react-dom',
+  '@eslint-react/hooks-extra': 'react-hooks-extra',
+  '@eslint-react/naming-convention': 'react-naming-convention'
 };
+
+export type ResolvedOptions<T> = T extends boolean
+  ? never
+  : NonNullable<T>;
+
+export function resolveSubOptions<K extends keyof OptionsConfig>(
+  options: OptionsConfig,
+  key: K
+): ResolvedOptions<OptionsConfig[K]> {
+  return typeof options[key] === 'boolean'
+    ? {} as any
+    : options[key] || {};
+}
+
+export function getOverrides<K extends keyof OptionsConfig>(
+  options: OptionsConfig,
+  key: K
+): Partial<RuleOptions & Linter.RulesRecord> {
+  const sub = resolveSubOptions(options, key);
+  return {
+    ...(options.overrides as any)?.[key],
+    ...'overrides' in sub
+      ? sub.overrides
+      : {}
+  };
+}
 
 /**
  * Construct an array of ESLint flat config items.
@@ -89,22 +115,22 @@ export const defaultPluginRenaming = {
  */
 export function whoj(
   options: OptionsConfig & Omit<TypedFlatConfigItem, 'files'> = {},
-  ...userConfigs: Awaitable<TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any> | Linter.Config[]>[]
+  ...userConfigs: Awaitable<Linter.Config[] | TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any>>[]
 ): FlatConfigComposer<TypedFlatConfigItem, ConfigNames> {
   const {
-    astro: enableAstro = false,
-    autoRenamePlugins = true,
     componentExts = [],
-    gitignore: enableGitignore = true,
     jsx: enableJsx = true,
-    nuxt: enableNuxt = NuxtPackages.some(i => isPackageExists(i)),
+    autoRenamePlugins = true,
+    astro: enableAstro = false,
     react: enableReact = false,
-    regexp: enableRegexp = true,
     solid: enableSolid = false,
+    regexp: enableRegexp = true,
     svelte: enableSvelte = false,
-    typescript: enableTypeScript = isPackageExists('typescript'),
-    unicorn: enableUnicorn = true,
     unocss: enableUnoCSS = false,
+    unicorn: enableUnicorn = true,
+    gitignore: enableGitignore = true,
+    typescript: enableTypeScript = isPackageExists('typescript'),
+    nuxt: enableNuxt = NuxtPackages.some(i => isPackageExists(i)),
     vue: enableVue = enableNuxt !== false && VuePackages.some(i => isPackageExists(i))
   } = options;
 
@@ -125,10 +151,10 @@ export function whoj(
   if (stylisticOptions) {
     stylisticOptions.overrides = {
       ...(stylisticOptions.overrides || {}),
-      'style/comma-dangle': ['error', 'never'],
-      'style/quotes': ['error', 'single'],
       'style/semi': [2, 'always'],
-      'style/spaced-comment': 'off'
+      'style/comma-dangle': ['off'],
+      'style/spaced-comment': 'off',
+      'style/quotes': ['error', 'single']
     };
   }
 
@@ -146,8 +172,8 @@ export function whoj(
     }
     else {
       configs.push(interopDefault(import('eslint-config-flat-gitignore')).then(r => [r({
-        name: 'whoj/gitignore',
-        strict: false
+        strict: false,
+        name: 'whoj/gitignore'
       })]));
     }
   }
@@ -192,8 +218,8 @@ export function whoj(
     configs.push(typescript({
       ...typescriptOptions,
       componentExts,
-      overrides: getOverrides(options, 'typescript'),
-      type: options.type
+      type: options.type,
+      overrides: getOverrides(options, 'typescript')
     }));
   }
 
@@ -202,7 +228,6 @@ export function whoj(
       ...stylisticOptions,
       lessOpinionated: options.lessOpinionated,
       overrides: getOverrides(options, 'stylistic')
-
     }));
   }
 
@@ -220,33 +245,33 @@ export function whoj(
   if (enableVue) {
     configs.push(vue({
       ...resolveSubOptions(options, 'vue'),
-      overrides: getOverrides(options, 'vue'),
       stylistic: stylisticOptions,
-      typescript: !!enableTypeScript
+      typescript: !!enableTypeScript,
+      overrides: getOverrides(options, 'vue')
     }));
   }
 
   if (enableReact) {
     configs.push(react({
       ...typescriptOptions,
-      overrides: getOverrides(options, 'react'),
-      tsconfigPath
+      tsconfigPath,
+      overrides: getOverrides(options, 'react')
     }));
   }
 
   if (enableSolid) {
     configs.push(solid({
-      overrides: getOverrides(options, 'solid'),
       tsconfigPath,
-      typescript: !!enableTypeScript
+      typescript: !!enableTypeScript,
+      overrides: getOverrides(options, 'solid')
     }));
   }
 
   if (enableSvelte) {
     configs.push(svelte({
-      overrides: getOverrides(options, 'svelte'),
       stylistic: stylisticOptions,
-      typescript: !!enableTypeScript
+      typescript: !!enableTypeScript,
+      overrides: getOverrides(options, 'svelte')
     }));
   }
 
@@ -259,16 +284,16 @@ export function whoj(
 
   if (enableAstro) {
     configs.push(astro({
-      overrides: getOverrides(options, 'astro'),
-      stylistic: stylisticOptions
+      stylistic: stylisticOptions,
+      overrides: getOverrides(options, 'astro')
     }));
   }
 
   if (options.jsonc ?? true) {
     configs.push(
       jsonc({
-        overrides: getOverrides(options, 'jsonc'),
-        stylistic: stylisticOptions
+        stylistic: stylisticOptions,
+        overrides: getOverrides(options, 'jsonc')
       }),
       sortPackageJson(),
       sortTsconfig()
@@ -277,15 +302,15 @@ export function whoj(
 
   if (options.yaml ?? true) {
     configs.push(yaml({
-      overrides: getOverrides(options, 'yaml'),
-      stylistic: stylisticOptions
+      stylistic: stylisticOptions,
+      overrides: getOverrides(options, 'yaml')
     }));
   }
 
   if (options.toml ?? true) {
     configs.push(toml({
-      overrides: getOverrides(options, 'toml'),
-      stylistic: stylisticOptions
+      stylistic: stylisticOptions,
+      overrides: getOverrides(options, 'toml')
     }));
   }
 
@@ -328,24 +353,18 @@ export function whoj(
   configs.push([{
     rules: {
       'eqeqeq': 'warn',
-      'import/order': 'off',
-      'no-useless-escape': 'warn',
-      'require-await': 'warn'
+      'require-await': 'off',
+      'no-useless-escape': 'warn'
     }
   }]);
 
   if (enableNuxt) {
     const { dirs, features = {} } = resolveSubOptions(options, 'nuxt');
-    configs.push(nuxt({
+    configs.unshift(nuxt({
       dirs,
       features: {
         ...features,
-        stylistic: features.stylistic === false
-          ? false
-          : {
-              ...stylisticOptions,
-              ...(typeof features.stylistic !== 'object' ? {} : features.stylistic)
-            }
+        stylistic: stylisticOptions
       }
     }));
   }
@@ -375,30 +394,4 @@ export function whoj(
   }
 
   return composer;
-}
-
-export type ResolvedOptions<T> = T extends boolean
-  ? never
-  : NonNullable<T>;
-
-export function resolveSubOptions<K extends keyof OptionsConfig>(
-  options: OptionsConfig,
-  key: K
-): ResolvedOptions<OptionsConfig[K]> {
-  return typeof options[key] === 'boolean'
-    ? {} as any
-    : options[key] || {};
-}
-
-export function getOverrides<K extends keyof OptionsConfig>(
-  options: OptionsConfig,
-  key: K
-): Partial<Linter.RulesRecord & RuleOptions> {
-  const sub = resolveSubOptions(options, key);
-  return {
-    ...(options.overrides as any)?.[key],
-    ...'overrides' in sub
-      ? sub.overrides
-      : {}
-  };
 }

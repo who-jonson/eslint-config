@@ -5,6 +5,7 @@ import { GLOB_JSX, GLOB_TSX } from '../globs';
 export async function jsx(): Promise<TypedFlatConfigItem[]> {
   return [
     {
+      name: 'whoj/jsx/setup',
       files: [GLOB_JSX, GLOB_TSX],
       languageOptions: {
         parserOptions: {
@@ -12,8 +13,7 @@ export async function jsx(): Promise<TypedFlatConfigItem[]> {
             jsx: true
           }
         }
-      },
-      name: 'whoj/jsx/setup'
+      }
     }
   ];
 }

@@ -45,16 +45,16 @@ const compat = new FlatCompat();
 
 export default whoj(
   {
-    ignores: []
+    ignores: [],
   },
 
   // Legacy config
   ...compat.config({
     extends: [
-      'eslint:recommended'
+      'eslint:recommended',
       // Other extends...
-    ]
-  })
+    ],
+  }),
 
   // Other flat configs...
 );
@@ -152,31 +152,31 @@ You can configure each integration individually, for example:
 import whoj from '@whoj/eslint-config';
 
 export default whoj({
-// Type of the project. 'lib' for libraries, the default is 'app'
-  type: 'lib',
+  vue: true,
 
   // Enable stylistic formatting rules
   // stylistic: true,
 
-  // Or customize the stylistic rules
-  stylistic: {
-    indent: 2, // 4, or 'tab'
-    quotes: 'single' // or 'double'
-  },
+  // Type of the project. 'lib' for libraries, the default is 'app'
+  type: 'lib',
+
+  yaml: false,
+  // Disable jsonc and yaml support
+  jsonc: false,
 
   // TypeScript and Vue are autodetected, you can also explicitly enable them:
   typescript: true,
-  vue: true,
-
-  // Disable jsonc and yaml support
-  jsonc: false,
-  yaml: false,
-
   // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
   ignores: [
-    '**/fixtures'
+    '**/fixtures',
     // ...globs
-  ]
+  ],
+
+  // Or customize the stylistic rules
+  stylistic: {
+    indent: 2, // 4, or 'tab'
+    quotes: 'single', // or 'double'
+  },
 });
 ```
 
@@ -194,12 +194,12 @@ export default whoj(
   // From the second arguments they are ESLint Flat Configs
   // you can have multiple configs
   {
+    rules: {},
     files: ['**/*.ts'],
-    rules: {}
   },
   {
-    rules: {}
-  }
+    rules: {},
+  },
 );
 ```
 

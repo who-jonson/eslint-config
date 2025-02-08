@@ -12,8 +12,8 @@ function randomStr() {
 }
 
 async function run(params: string[] = [], env = {
-  SKIP_PROMPT: '1',
-  NO_COLOR: '1'
+  NO_COLOR: '1',
+  SKIP_PROMPT: '1'
 }) {
   return execa('node', [CLI_PATH, ...params], {
     cwd: genPath,
@@ -25,7 +25,7 @@ async function run(params: string[] = [], env = {
 };
 
 async function createMockDir() {
-  await fs.rm(genPath, { recursive: true, force: true });
+  await fs.rm(genPath, { force: true, recursive: true });
   await fs.ensureDir(genPath);
 
   await Promise.all([
@@ -38,7 +38,7 @@ async function createMockDir() {
 };
 
 beforeEach(async () => await createMockDir());
-afterAll(async () => await fs.rm(genPath, { recursive: true, force: true }));
+afterAll(async () => await fs.rm(genPath, { force: true, recursive: true }));
 
 it('package.json updated', async () => {
   const { stdout } = await run();

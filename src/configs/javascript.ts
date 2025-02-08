@@ -5,175 +5,176 @@ import type { OptionsOverrides, OptionsIsInEditor, TypedFlatConfigItem } from '.
 import { pluginAntfu, pluginUnusedImports } from '../plugins';
 
 export async function javascript(
-  options: OptionsIsInEditor & OptionsOverrides = {}
+  options: OptionsOverrides & OptionsIsInEditor = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
-    isInEditor = false,
-    overrides = {}
+    overrides = {},
+    isInEditor = false
   } = options;
 
   return [
     {
+      name: 'whoj/javascript/setup',
+      linterOptions: {
+        reportUnusedDisableDirectives: true
+      },
       languageOptions: {
         ecmaVersion: 2022,
+        sourceType: 'module',
+        parserOptions: {
+          ecmaVersion: 2022,
+          sourceType: 'module',
+          ecmaFeatures: {
+            jsx: true
+          }
+        },
         globals: {
           ...globals.browser,
           ...globals.es2021,
           ...globals.node,
+          window: 'readonly',
           document: 'readonly',
-          navigator: 'readonly',
-          window: 'readonly'
-        },
-        parserOptions: {
-          ecmaFeatures: {
-            jsx: true
-          },
-          ecmaVersion: 2022,
-          sourceType: 'module'
-        },
-        sourceType: 'module'
-      },
-      linterOptions: {
-        reportUnusedDisableDirectives: true
-      },
-      name: 'whoj/javascript/setup'
+          navigator: 'readonly'
+        }
+      }
     },
     {
       name: 'whoj/javascript/rules',
       plugins: {
-        'unused-imports': pluginUnusedImports,
-        'whoj': pluginAntfu
+        'whoj': pluginAntfu,
+        'unused-imports': pluginUnusedImports
       },
       rules: {
-        'accessor-pairs': ['error', { enforceForClassMembers: true, setWithoutGet: true }],
+        'no-new': 'error',
 
-        'array-callback-return': 'error',
+        'no-var': 'error',
 
-        'block-scoped-var': 'error',
-        'constructor-super': 'error',
-        'default-case-last': 'error',
-        'dot-notation': ['error', { allowKeywords: true }],
-        'eqeqeq': ['error', 'smart'],
-        'new-cap': ['error', { capIsNew: false, newIsCap: true, properties: true }],
-        'no-alert': 'error',
-        'no-array-constructor': 'error',
-        'no-async-promise-executor': 'error',
-        'no-caller': 'error',
-        'no-case-declarations': 'error',
-        'no-class-assign': 'error',
-        'no-compare-neg-zero': 'error',
-        'no-cond-assign': ['error', 'always'],
-        'no-console': ['error', { allow: ['warn', 'error'] }],
-        'no-const-assign': 'error',
-        'no-control-regex': 'error',
-        'no-debugger': 'error',
-        'no-delete-var': 'error',
-        'no-dupe-args': 'error',
-        'no-dupe-class-members': 'error',
-        'no-dupe-keys': 'error',
-        'no-duplicate-case': 'error',
-        'no-empty': ['error', { allowEmptyCatch: true }],
-        'no-empty-character-class': 'error',
-        'no-empty-pattern': 'error',
         'no-eval': 'error',
+        'no-with': 'error',
+        'no-alert': 'error',
+        'no-octal': 'error',
+        'no-proto': 'error',
+        'no-undef': 'error',
+        'no-caller': 'error',
+        'no-debugger': 'error',
+        'no-iterator': 'error',
+        'no-new-func': 'error',
+        'vars-on-top': 'error',
+        'no-dupe-args': 'error',
+        'no-dupe-keys': 'error',
         'no-ex-assign': 'error',
-        'no-extend-native': 'error',
+        'no-multi-str': 'error',
+        'no-obj-calls': 'error',
+        'no-sequences': 'error',
+        'no-delete-var': 'error',
         'no-extra-bind': 'error',
-        'no-extra-boolean-cast': 'error',
+        'no-undef-init': 'error',
+        'prefer-spread': 'error',
         'no-fallthrough': 'error',
         'no-func-assign': 'error',
-        'no-global-assign': 'error',
-        'no-implied-eval': 'error',
-        'no-import-assign': 'error',
-        'no-invalid-regexp': 'error',
-        'no-irregular-whitespace': 'error',
-        'no-iterator': 'error',
-        'no-labels': ['error', { allowLoop: false, allowSwitch: false }],
         'no-lone-blocks': 'error',
-        'no-loss-of-precision': 'error',
-        'no-misleading-character-class': 'error',
-        'no-multi-str': 'error',
-        'no-new': 'error',
-        'no-new-func': 'error',
-        'no-new-native-nonconstructor': 'error',
+        'no-unreachable': 'error',
+        'no-class-assign': 'error',
+        'no-const-assign': 'error',
+        'no-implied-eval': 'error',
         'no-new-wrappers': 'error',
-        'no-obj-calls': 'error',
-        'no-octal': 'error',
         'no-octal-escape': 'error',
-        'no-proto': 'error',
-        'no-prototype-builtins': 'error',
-        'no-redeclare': ['error', { builtinGlobals: false }],
         'no-regex-spaces': 'error',
-        'no-restricted-globals': [
-          'error',
-          { message: 'Use `globalThis` instead.', name: 'global' },
-          { message: 'Use `globalThis` instead.', name: 'self' }
-        ],
-        'no-restricted-properties': [
-          'error',
-          { message: 'Use `Object.getPrototypeOf` or `Object.setPrototypeOf` instead.', property: '__proto__' },
-          { message: 'Use `Object.defineProperty` instead.', property: '__defineGetter__' },
-          { message: 'Use `Object.defineProperty` instead.', property: '__defineSetter__' },
-          { message: 'Use `Object.getOwnPropertyDescriptor` instead.', property: '__lookupGetter__' },
-          { message: 'Use `Object.getOwnPropertyDescriptor` instead.', property: '__lookupSetter__' }
-        ],
+        'no-self-compare': 'error',
+        'no-useless-call': 'error',
+        'prefer-template': 'error',
+        'yoda': ['error', 'never'],
+        'block-scoped-var': 'error',
+        'no-control-regex': 'error',
+        'no-empty-pattern': 'error',
+        'no-extend-native': 'error',
+        'no-global-assign': 'error',
+        'no-import-assign': 'error',
+        'no-sparse-arrays': 'error',
+        'no-throw-literal': 'error',
+        'no-useless-catch': 'error',
+        'constructor-super': 'error',
+        'default-case-last': 'error',
+        'eqeqeq': ['error', 'smart'],
+        'no-duplicate-case': 'error',
+        'no-invalid-regexp': 'error',
+        'no-unsafe-finally': 'error',
+        'no-useless-rename': 'error',
+        'no-useless-return': 'error',
+        'no-unsafe-negation': 'error',
+        'prefer-rest-params': 'error',
+        'symbol-description': 'error',
+        'no-compare-neg-zero': 'error',
+        'no-unreachable-loop': 'error',
+        'no-array-constructor': 'error',
+        'no-case-declarations': 'error',
+        'no-loss-of-precision': 'error',
+        'no-this-before-super': 'error',
+        'array-callback-return': 'error',
+        'no-dupe-class-members': 'error',
+        'no-extra-boolean-cast': 'error',
+        'no-prototype-builtins': 'error',
+        'no-useless-constructor': 'error',
+        'unicode-bom': ['error', 'never'],
+        'no-irregular-whitespace': 'error',
+        'no-unexpected-multiline': 'error',
+        'no-useless-computed-key': 'error',
+        'whoj/no-top-level-await': 'error',
+        'no-empty-character-class': 'error',
+        'no-useless-backreference': 'error',
+        'no-async-promise-executor': 'error',
+        'no-cond-assign': ['error', 'always'],
+        'no-shadow-restricted-names': 'error',
+        'no-template-curly-in-string': 'error',
+        'no-new-native-nonconstructor': 'error',
+        'no-unmodified-loop-condition': 'error',
+        'prefer-promise-reject-errors': 'error',
+        'no-misleading-character-class': 'error',
+        'prefer-exponentiation-operator': 'error',
+        'no-self-assign': ['error', { props: true }],
+        'one-var': ['error', { initialized: 'never' }],
+        'no-empty': ['error', { allowEmptyCatch: true }],
+        'dot-notation': ['error', { allowKeywords: true }],
+        'no-redeclare': ['error', { builtinGlobals: false }],
+        'no-console': ['error', { allow: ['warn', 'error'] }],
+        'valid-typeof': ['error', { requireStringLiterals: true }],
+        'no-unneeded-ternary': ['error', { defaultAssignment: false }],
+        'no-labels': ['error', { allowLoop: false, allowSwitch: false }],
+        'unused-imports/no-unused-imports': isInEditor ? 'warn' : 'error',
+        'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
+        'new-cap': ['error', { newIsCap: true, capIsNew: false, properties: true }],
+        'use-isnan': ['error', { enforceForIndexOf: true, enforceForSwitchCase: true }],
+        'accessor-pairs': ['error', { setWithoutGet: true, enforceForClassMembers: true }],
+        'no-use-before-define': ['error', { classes: false, variables: true, functions: false }],
         'no-restricted-syntax': [
           'error',
           'TSEnumDeclaration[const=true]',
           'TSExportAssignment'
         ],
-        'no-self-assign': ['error', { props: true }],
-        'no-self-compare': 'error',
-        'no-sequences': 'error',
-        'no-shadow-restricted-names': 'error',
-        'no-sparse-arrays': 'error',
-        'no-template-curly-in-string': 'error',
-        'no-this-before-super': 'error',
-        'no-throw-literal': 'error',
-        'no-undef': 'error',
-        'no-undef-init': 'error',
-        'no-unexpected-multiline': 'error',
-        'no-unmodified-loop-condition': 'error',
-        'no-unneeded-ternary': ['error', { defaultAssignment: false }],
-        'no-unreachable': 'error',
-        'no-unreachable-loop': 'error',
-        'no-unsafe-finally': 'error',
-        'no-unsafe-negation': 'error',
         'no-unused-expressions': ['error', {
+          allowTernary: true,
           allowShortCircuit: true,
-          allowTaggedTemplates: true,
-          allowTernary: true
+          allowTaggedTemplates: true
         }],
         'no-unused-vars': ['error', {
+          vars: 'all',
           args: 'none',
           caughtErrors: 'none',
-          ignoreRestSiblings: true,
-          vars: 'all'
+          ignoreRestSiblings: true
         }],
-        'no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
-        'no-useless-backreference': 'error',
-        'no-useless-call': 'error',
-        'no-useless-catch': 'error',
-        'no-useless-computed-key': 'error',
-        'no-useless-constructor': 'error',
-        'no-useless-rename': 'error',
-        'no-useless-return': 'error',
-        'no-var': 'error',
-        'no-with': 'error',
+        'prefer-arrow-callback': [
+          'error',
+          {
+            allowUnboundThis: true,
+            allowNamedFunctions: false
+          }
+        ],
         'object-shorthand': [
           'error',
           'always',
           {
             avoidQuotes: true,
             ignoreConstructors: false
-          }
-        ],
-        'one-var': ['error', { initialized: 'never' }],
-        'prefer-arrow-callback': [
-          'error',
-          {
-            allowNamedFunctions: false,
-            allowUnboundThis: true
           }
         ],
         'prefer-const': [
@@ -183,30 +184,29 @@ export async function javascript(
             ignoreReadBeforeAssign: true
           }
         ],
-        'prefer-exponentiation-operator': 'error',
-        'prefer-promise-reject-errors': 'error',
-        'prefer-regex-literals': ['error', { disallowRedundantWrapping: true }],
-        'prefer-rest-params': 'error',
-        'prefer-spread': 'error',
-        'prefer-template': 'error',
-        'symbol-description': 'error',
-        'unicode-bom': ['error', 'never'],
-        'unused-imports/no-unused-imports': isInEditor ? 'warn' : 'error',
+        'no-restricted-globals': [
+          'error',
+          { name: 'global', message: 'Use `globalThis` instead.' },
+          { name: 'self', message: 'Use `globalThis` instead.' }
+        ],
         'unused-imports/no-unused-vars': [
           'error',
           {
+            vars: 'all',
             args: 'after-used',
             argsIgnorePattern: '^_',
-            ignoreRestSiblings: true,
-            vars: 'all',
-            varsIgnorePattern: '^_'
+            varsIgnorePattern: '^_',
+            ignoreRestSiblings: true
           }
         ],
-        'use-isnan': ['error', { enforceForIndexOf: true, enforceForSwitchCase: true }],
-        'valid-typeof': ['error', { requireStringLiterals: true }],
-        'vars-on-top': 'error',
-        'whoj/no-top-level-await': 'error',
-        'yoda': ['error', 'never'],
+        'no-restricted-properties': [
+          'error',
+          { property: '__proto__', message: 'Use `Object.getPrototypeOf` or `Object.setPrototypeOf` instead.' },
+          { property: '__defineGetter__', message: 'Use `Object.defineProperty` instead.' },
+          { property: '__defineSetter__', message: 'Use `Object.defineProperty` instead.' },
+          { property: '__lookupGetter__', message: 'Use `Object.getOwnPropertyDescriptor` instead.' },
+          { property: '__lookupSetter__', message: 'Use `Object.getOwnPropertyDescriptor` instead.' }
+        ],
 
         ...overrides
       }

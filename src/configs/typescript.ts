@@ -15,14 +15,14 @@ import { renameRules, interopDefault } from '../utils';
 import { GLOB_TS, GLOB_TSX, GLOB_ASTRO_TS, GLOB_MARKDOWN } from '../globs';
 
 export async function typescript(
-  options: OptionsFiles & OptionsComponentExts & OptionsOverrides & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions & OptionsProjectType = {}
+  options: OptionsFiles & OptionsOverrides & OptionsProjectType & OptionsComponentExts & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
-    componentExts = [],
+    type = 'app',
     overrides = {},
-    overridesTypeAware = {},
+    componentExts = [],
     parserOptions = {},
-    type = 'app'
+    overridesTypeAware = {}
   } = options;
 
   const files = options.files ?? [
@@ -45,24 +45,24 @@ export async function typescript(
     'dot-notation': 'off',
     'no-implied-eval': 'off',
     'ts/await-thenable': 'error',
-    'ts/dot-notation': ['error', { allowKeywords: true }],
-    'ts/no-floating-promises': 'error',
+    'ts/no-unsafe-call': 'error',
+    'ts/unbound-method': 'error',
     'ts/no-for-in-array': 'error',
     'ts/no-implied-eval': 'error',
-    'ts/no-misused-promises': 'error',
-    'ts/no-unnecessary-type-assertion': 'error',
-    'ts/no-unsafe-argument': 'error',
-    'ts/no-unsafe-assignment': 'error',
-    'ts/no-unsafe-call': 'error',
-    'ts/no-unsafe-member-access': 'error',
     'ts/no-unsafe-return': 'error',
+    'ts/no-unsafe-argument': 'error',
+    'ts/no-misused-promises': 'error',
+    'ts/no-floating-promises': 'error',
+    'ts/no-unsafe-assignment': 'error',
     'ts/promise-function-async': 'error',
     'ts/restrict-plus-operands': 'error',
+    'ts/no-unsafe-member-access': 'error',
+    'ts/switch-exhaustiveness-check': 'error',
+    'ts/no-unnecessary-type-assertion': 'error',
     'ts/restrict-template-expressions': 'error',
     'ts/return-await': ['error', 'in-try-catch'],
-    'ts/strict-boolean-expressions': ['error', { allowNullableBoolean: true, allowNullableObject: true }],
-    'ts/switch-exhaustiveness-check': 'error',
-    'ts/unbound-method': 'error'
+    'ts/dot-notation': ['error', { allowKeywords: true }],
+    'ts/strict-boolean-expressions': ['error', { allowNullableObject: true, allowNullableBoolean: true }]
   };
 
   const [
@@ -77,24 +77,24 @@ export async function typescript(
     return {
       files,
       ...ignores ? { ignores } : {},
+      name: `whoj/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`,
       languageOptions: {
         parser: parserTs,
         parserOptions: {
-          extraFileExtensions: componentExts.map(ext => `.${ext}`),
           sourceType: 'module',
+          extraFileExtensions: componentExts.map(ext => `.${ext}`),
           ...typeAware
             ? {
+                tsconfigRootDir: process.cwd(),
                 projectService: {
-                  allowDefaultProject: ['./*.js'],
-                  defaultProject: tsconfigPath
-                },
-                tsconfigRootDir: process.cwd()
+                  defaultProject: tsconfigPath,
+                  allowDefaultProject: ['./*.js']
+                }
               }
             : {},
           ...parserOptions as any
         }
-      },
-      name: `whoj/typescript/${typeAware ? 'type-aware-parser' : 'parser'}`
+      }
     };
   }
 
@@ -103,8 +103,8 @@ export async function typescript(
       // Install the plugins without globs, so they can be configured separately.
       name: 'whoj/typescript/setup',
       plugins: {
-        ts: pluginTs as any,
-        whoj: pluginAntfu
+        whoj: pluginAntfu,
+        ts: pluginTs as any
       }
     },
     // assign type-aware parser for type-aware files and type-unaware parser for the rest
@@ -128,50 +128,50 @@ export async function typescript(
           pluginTs.configs.strict.rules!,
           { '@typescript-eslint': 'ts' }
         ),
-        'no-dupe-class-members': 'off',
         'no-redeclare': 'off',
-        'no-use-before-define': 'off',
-        'no-useless-constructor': 'off',
         'ts/ban-ts-comment': 'off',
-        'ts/consistent-type-definitions': ['error', 'interface'],
-        'ts/consistent-type-imports': ['error', {
-          disallowTypeAnnotations: false,
-          fixStyle: 'separate-type-imports',
-          prefer: 'type-imports'
-        }],
+        'ts/no-unused-vars': 'off',
+        'ts/no-explicit-any': 'off',
+        'no-use-before-define': 'off',
+        'ts/no-dynamic-delete': 'off',
+        'no-dupe-class-members': 'off',
 
+        'ts/unified-signatures': 'off',
+        'no-useless-constructor': 'off',
+        'ts/no-extraneous-class': 'off',
+        'ts/no-invalid-void-type': 'off',
+        'ts/no-require-imports': 'error',
+        'ts/no-non-null-assertion': 'off',
+        'ts/no-useless-constructor': 'off',
+        'ts/triple-slash-reference': 'off',
+        'ts/no-dupe-class-members': 'error',
+        'ts/no-unsafe-function-type': ['off'],
+        'ts/no-wrapper-object-types': 'error',
+        'ts/no-import-type-side-effects': 'error',
         'ts/explicit-function-return-type': ['off'],
         'ts/method-signature-style': ['warn', 'property'], // https://www.totaltypescript.com/method-shorthand-syntax-considered-harmful
-        'ts/no-dupe-class-members': 'error',
-        'ts/no-dynamic-delete': 'off',
-        'ts/no-empty-object-type': ['warn', { allowInterfaces: 'always' }],
-        'ts/no-explicit-any': 'off',
-        'ts/no-extraneous-class': 'off',
-        'ts/no-import-type-side-effects': 'error',
-        'ts/no-invalid-void-type': 'off',
-        'ts/no-non-null-assertion': 'off',
-        'ts/no-redeclare': ['error', { builtinGlobals: false }],
-        'ts/no-require-imports': 'error',
-        'ts/no-unsafe-function-type': ['off'],
-        'ts/no-unused-expressions': ['warn', {
-          allowShortCircuit: true,
-          allowTaggedTemplates: true,
-          allowTernary: true
-        }],
 
-        'ts/no-unused-vars': 'off',
-        'ts/no-use-before-define': ['error', { classes: false, functions: false, variables: true }],
-        'ts/no-useless-constructor': 'off',
-        'ts/no-wrapper-object-types': 'error',
-        'ts/triple-slash-reference': 'off',
-        'ts/unified-signatures': 'off',
+        'ts/no-redeclare': ['error', { builtinGlobals: false }],
+        'ts/consistent-type-definitions': ['error', 'interface'],
+        'ts/no-empty-object-type': ['warn', { allowInterfaces: 'always' }],
+        'ts/no-use-before-define': ['error', { classes: false, variables: true, functions: false }],
+        'ts/no-unused-expressions': ['warn', {
+          allowTernary: true,
+          allowShortCircuit: true,
+          allowTaggedTemplates: true
+        }],
+        'ts/consistent-type-imports': ['error', {
+          prefer: 'type-imports',
+          disallowTypeAnnotations: false,
+          fixStyle: 'separate-type-imports'
+        }],
 
         ...(type === 'lib'
           ? {
               'ts/explicit-function-return-type': ['error', {
+                allowIIFEs: true,
                 allowExpressions: true,
-                allowHigherOrderFunctions: true,
-                allowIIFEs: true
+                allowHigherOrderFunctions: true
               }]
             }
           : {}

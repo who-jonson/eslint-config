@@ -6,13 +6,14 @@ import { whoj } from './src';
 export default whoj(
   {
     vue: true,
-    react: true,
-    solid: true,
-    svelte: true,
-    astro: true,
+    nuxt: true,
+    type: 'lib',
+    react: false,
+    solid: false,
+    astro: false,
+    svelte: false,
     typescript: true,
-    formatters: true,
-    type: 'lib'
+    formatters: true
   },
   {
     ignores: [
@@ -37,11 +38,6 @@ export default whoj(
   },
   {
     rules: {
-      'eqeqeq': 'warn',
-      'style/semi': [2, 'always'],
-      'import/order': 'off',
-      'require-await': 'off',
-
       'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
     }

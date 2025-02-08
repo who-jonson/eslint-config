@@ -7,35 +7,21 @@ import { StylisticConfigDefaults } from './stylistic';
 import { parserPlain, ensurePackages, interopDefault, isPackageInScope } from '../utils';
 import { GLOB_CSS, GLOB_SVG, GLOB_XML, GLOB_HTML, GLOB_LESS, GLOB_SCSS, GLOB_ASTRO, GLOB_GRAPHQL, GLOB_POSTCSS, GLOB_ASTRO_TS, GLOB_MARKDOWN } from '../globs';
 
-function mergePrettierOptions(
-  options: VendoredPrettierOptions,
-  overrides: VendoredPrettierRuleOptions = {}
-): VendoredPrettierRuleOptions {
-  return {
-    ...options,
-    ...overrides,
-    plugins: [
-      ...(overrides.plugins || []),
-      ...(options.plugins || [])
-    ]
-  };
-}
-
 export async function formatters(
-  options: OptionsFormatters | true = {},
+  options: true | OptionsFormatters = {},
   stylistic: StylisticConfig = {}
 ): Promise<TypedFlatConfigItem[]> {
   if (options === true) {
     const isPrettierPluginXmlInScope = isPackageInScope('@prettier/plugin-xml');
     options = {
-      astro: isPackageInScope('prettier-plugin-astro'),
       css: true,
-      graphql: true,
       html: true,
+      graphql: true,
       markdown: true,
-      slidev: isPackageExists('@slidev/cli'),
       svg: isPrettierPluginXmlInScope,
-      xml: isPrettierPluginXmlInScope
+      xml: isPrettierPluginXmlInScope,
+      slidev: isPackageExists('@slidev/cli'),
+      astro: isPackageInScope('prettier-plugin-astro')
     };
   }
 
@@ -50,9 +36,9 @@ export async function formatters(
     throw new Error('`slidev` option only works when `markdown` is enabled with `prettier`');
 
   const {
+    semi,
     indent,
-    quotes,
-    semi
+    quotes
   } = {
     ...StylisticConfigDefaults,
     ...stylistic
@@ -60,29 +46,29 @@ export async function formatters(
 
   const prettierOptions: VendoredPrettierOptions = Object.assign(
     {
-      endOfLine: 'auto',
-      printWidth: 120,
       semi,
-      singleQuote: quotes === 'single',
-      tabWidth: typeof indent === 'number' ? indent : 2,
+      printWidth: 120,
+      endOfLine: 'auto',
       trailingComma: 'all',
-      useTabs: indent === 'tab'
+      useTabs: indent === 'tab',
+      singleQuote: quotes === 'single',
+      tabWidth: typeof indent === 'number' ? indent : 2
     } satisfies VendoredPrettierOptions,
     options.prettierOptions || {}
   );
 
   const prettierXmlOptions: VendoredPrettierOptions = {
-    xmlQuoteAttributes: 'double',
     xmlSelfClosingSpace: true,
+    xmlQuoteAttributes: 'double',
     xmlSortAttributesByKey: false,
     xmlWhitespaceSensitivity: 'ignore'
   };
 
   const dprintOptions = Object.assign(
     {
+      useTabs: indent === 'tab',
       indentWidth: typeof indent === 'number' ? indent : 2,
-      quoteStyle: quotes === 'single' ? 'preferSingle' : 'preferDouble',
-      useTabs: indent === 'tab'
+      quoteStyle: quotes === 'single' ? 'preferSingle' : 'preferDouble'
     },
     options.dprintOptions || {}
   );
@@ -101,11 +87,11 @@ export async function formatters(
   if (options.css) {
     configs.push(
       {
+        name: 'whoj/formatter/css',
         files: [GLOB_CSS, GLOB_POSTCSS],
         languageOptions: {
           parser: parserPlain
         },
-        name: 'whoj/formatter/css',
         rules: {
           'format/prettier': [
             'error',
@@ -117,10 +103,10 @@ export async function formatters(
       },
       {
         files: [GLOB_SCSS],
+        name: 'whoj/formatter/scss',
         languageOptions: {
           parser: parserPlain
         },
-        name: 'whoj/formatter/scss',
         rules: {
           'format/prettier': [
             'error',
@@ -132,10 +118,10 @@ export async function formatters(
       },
       {
         files: [GLOB_LESS],
+        name: 'whoj/formatter/less',
         languageOptions: {
           parser: parserPlain
         },
-        name: 'whoj/formatter/less',
         rules: {
           'format/prettier': [
             'error',
@@ -151,10 +137,10 @@ export async function formatters(
   if (options.html) {
     configs.push({
       files: [GLOB_HTML],
+      name: 'whoj/formatter/html',
       languageOptions: {
         parser: parserPlain
       },
-      name: 'whoj/formatter/html',
       rules: {
         'format/prettier': [
           'error',
@@ -169,10 +155,10 @@ export async function formatters(
   if (options.xml) {
     configs.push({
       files: [GLOB_XML],
+      name: 'whoj/formatter/xml',
       languageOptions: {
         parser: parserPlain
       },
-      name: 'whoj/formatter/xml',
       rules: {
         'format/prettier': [
           'error',
@@ -189,10 +175,10 @@ export async function formatters(
   if (options.svg) {
     configs.push({
       files: [GLOB_SVG],
+      name: 'whoj/formatter/svg',
       languageOptions: {
         parser: parserPlain
       },
-      name: 'whoj/formatter/svg',
       rules: {
         'format/prettier': [
           'error',
@@ -219,19 +205,19 @@ export async function formatters(
         : options.slidev.files;
 
     configs.push({
-      files: [GLOB_MARKDOWN],
       ignores: GLOB_SLIDEV,
+      files: [GLOB_MARKDOWN],
+      name: 'whoj/formatter/markdown',
       languageOptions: {
         parser: parserPlain
       },
-      name: 'whoj/formatter/markdown',
       rules: {
         [`format/${formater}`]: [
           'error',
           formater === 'prettier'
             ? mergePrettierOptions(prettierOptions, {
-                embeddedLanguageFormatting: 'off',
-                parser: 'markdown'
+                parser: 'markdown',
+                embeddedLanguageFormatting: 'off'
               })
             : {
                 ...dprintOptions,
@@ -244,16 +230,16 @@ export async function formatters(
     if (options.slidev) {
       configs.push({
         files: GLOB_SLIDEV,
+        name: 'whoj/formatter/slidev',
         languageOptions: {
           parser: parserPlain
         },
-        name: 'whoj/formatter/slidev',
         rules: {
           'format/prettier': [
             'error',
             mergePrettierOptions(prettierOptions, {
-              embeddedLanguageFormatting: 'off',
               parser: 'slidev',
+              embeddedLanguageFormatting: 'off',
               plugins: [
                 'prettier-plugin-slidev'
               ]
@@ -267,10 +253,10 @@ export async function formatters(
   if (options.astro) {
     configs.push({
       files: [GLOB_ASTRO],
+      name: 'whoj/formatter/astro',
       languageOptions: {
         parser: parserPlain
       },
-      name: 'whoj/formatter/astro',
       rules: {
         'format/prettier': [
           'error',
@@ -288,13 +274,13 @@ export async function formatters(
       files: [GLOB_ASTRO, GLOB_ASTRO_TS],
       name: 'whoj/formatter/astro/disables',
       rules: {
-        'style/arrow-parens': 'off',
-        'style/block-spacing': 'off',
-        'style/comma-dangle': 'off',
+        'style/semi': 'off',
         'style/indent': 'off',
-        'style/no-multi-spaces': 'off',
         'style/quotes': 'off',
-        'style/semi': 'off'
+        'style/arrow-parens': 'off',
+        'style/comma-dangle': 'off',
+        'style/block-spacing': 'off',
+        'style/no-multi-spaces': 'off'
       }
     });
   }
@@ -302,10 +288,10 @@ export async function formatters(
   if (options.graphql) {
     configs.push({
       files: [GLOB_GRAPHQL],
+      name: 'whoj/formatter/graphql',
       languageOptions: {
         parser: parserPlain
       },
-      name: 'whoj/formatter/graphql',
       rules: {
         'format/prettier': [
           'error',
@@ -318,4 +304,18 @@ export async function formatters(
   }
 
   return configs;
+}
+
+function mergePrettierOptions(
+  options: VendoredPrettierOptions,
+  overrides: VendoredPrettierRuleOptions = {}
+): VendoredPrettierRuleOptions {
+  return {
+    ...options,
+    ...overrides,
+    plugins: [
+      ...(overrides.plugins || []),
+      ...(options.plugins || [])
+    ]
+  };
 }

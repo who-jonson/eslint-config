@@ -7,32 +7,32 @@ import { it, afterAll, beforeAll } from 'vitest';
 import type { OptionsConfig, TypedFlatConfigItem } from '../src/types';
 
 beforeAll(async () => {
-  await fs.rm('_fixtures', { recursive: true, force: true });
+  await fs.rm('_fixtures', { force: true, recursive: true });
 });
 afterAll(async () => {
-  await fs.rm('_fixtures', { recursive: true, force: true });
+  await fs.rm('_fixtures', { force: true, recursive: true });
 });
 
 runWithConfig('js', {
-  typescript: false,
-  vue: false
+  vue: false,
+  typescript: false
 });
 runWithConfig('all', {
-  typescript: true,
   vue: true,
+  astro: true,
   svelte: true,
-  astro: true
+  typescript: true
 });
 runWithConfig('no-style', {
-  typescript: true,
   vue: true,
+  typescript: true,
   stylistic: false
 });
 runWithConfig(
   'tab-double-quotes',
   {
-    typescript: true,
     vue: true,
+    typescript: true,
     stylistic: {
       indent: 'tab',
       quotes: 'double'
@@ -77,10 +77,10 @@ runWithConfig(
 runWithConfig(
   'ts-strict-with-react',
   {
+    react: true,
     typescript: {
       tsconfigPath: './tsconfig.json'
-    },
-    react: true
+    }
   },
   {
     rules: {
@@ -92,9 +92,9 @@ runWithConfig(
 runWithConfig(
   'with-formatters',
   {
-    typescript: true,
     vue: true,
     astro: true,
+    typescript: true,
     formatters: true
   }
 );
@@ -138,11 +138,11 @@ export default whoj(
     });
 
     const files = await fg('**/*', {
+      cwd: target,
       ignore: [
         'node_modules',
         'eslint.config.js'
-      ],
-      cwd: target
+      ]
     });
 
     await Promise.all(files.map(async (file) => {
