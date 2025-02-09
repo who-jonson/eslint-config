@@ -6,8 +6,8 @@ export default defineConfig({
   format: ['esm'],
   platform: 'node',
   skipNodeModulesBundle: true,
-  external: [
-    /^(?!(\/|\.\/|\.\.\/))/
+  noExternal: [
+    '@antfu/utils'
   ],
   entry: [
     'src/index.ts',
