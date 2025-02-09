@@ -10,6 +10,7 @@ import type { PromptResult, FrameworkOption, ExtraLibrariesOption } from './type
 import { isGitClean } from './utils';
 import { updateEslintFiles } from './stages/update-eslint-files';
 import { updatePackageJson } from './stages/update-package-json';
+import { updateJetbrainsIdea } from './stages/update-jetbrains-idea';
 import { updateVscodeSettings } from './stages/update-vscode-settings';
 import { extra, frameworks, extraOptions, frameworkOptions } from './constants';
 
@@ -18,17 +19,29 @@ export interface CliRunOptions {
    * Skip prompts and use default values
    */
   yes?: boolean;
+
   /**
-   * Use the extra utils: formatter / perfectionist / unocss
+   * Add/Update .vscode/settings.json for better VS Code experience.
    */
-  extra?: string[];
+  vscode?: boolean;
+
   /**
-   * Use the framework template for optimal customization: vue / react / svelte / astro
+   * Configure eslint settings for better Jetbrains IDE. (WebStorm / PhpStorm) experience.
    */
-  frameworks?: string[];
+  jetbrains?: boolean;
+
+  /**
+   * Use the extra utils: 'formatter' | 'perfectionist' | 'unocss'
+   */
+  extra?: Array<ExtraLibrariesOption>;
+
+  /**
+   * Use the framework template for optimal customization: vue / nuxt / react / svelte / astro
+   */
+  frameworks?: Array<FrameworkOption>;
 }
 
-export async function run(options: CliRunOptions = {}): Promise<void> {
+export async function run({ jetbrains, vscode, ...options }: CliRunOptions = {}): Promise<void> {
   const argSkipPrompt = !!process.env.SKIP_PROMPT || options.yes;
   const argTemplate = <FrameworkOption[]>options.frameworks?.map(m => m.trim());
   const argExtra = <ExtraLibrariesOption[]>options.extra?.map(m => m.trim());
@@ -43,7 +56,8 @@ export async function run(options: CliRunOptions = {}): Promise<void> {
     extra: argExtra ?? [],
     frameworks: argTemplate ?? [],
     uncommittedConfirmed: false,
-    updateVscodeSettings: true
+    updateVscodeSettings: vscode ?? true,
+    updateJetbrainsIdea: jetbrains ?? true
   };
 
   if (!argSkipPrompt) {
@@ -90,6 +104,15 @@ export async function run(options: CliRunOptions = {}): Promise<void> {
         });
       },
 
+      updateJetbrainsIdea: ({ results }) => {
+        if (!results.uncommittedConfirmed)
+          return;
+
+        return p.confirm({
+          initialValue: true,
+          message: 'Update JetBrain IDE\'s eslint configuration for better experience WebStorm / PhpStorm?'
+        });
+      },
       updateVscodeSettings: ({ results }) => {
         if (!results.uncommittedConfirmed)
           return;
@@ -111,7 +134,11 @@ export async function run(options: CliRunOptions = {}): Promise<void> {
   }
 
   await updatePackageJson(result);
-  await updateEslintFiles(result);
+  const configFileName = await updateEslintFiles(result);
+  await updateJetbrainsIdea(
+    result,
+    configFileName
+  );
   await updateVscodeSettings(result);
 
   p.log.success(c.green('Setup completed'));

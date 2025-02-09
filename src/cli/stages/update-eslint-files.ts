@@ -11,7 +11,7 @@ import type { PromptResult } from '../types';
 
 import { getEslintConfigContent } from '../utils';
 
-export async function updateEslintFiles(result: PromptResult): Promise<void> {
+export async function updateEslintFiles(result: PromptResult): Promise<string> {
   const cwd = process.cwd();
   const pathESLintIgnore = path.join(cwd, '.eslintignore');
   const pathPackageJSON = path.join(cwd, 'package.json');
@@ -68,4 +68,6 @@ export async function updateEslintFiles(result: PromptResult): Promise<void> {
 
   if (legacyConfig.length)
     p.note(`${c.dim(legacyConfig.join(', '))}`, 'You can now remove those files manually');
+
+  return pathFlatConfig;
 }

@@ -6,11 +6,31 @@ export interface PromItem<T> {
   hint?: string;
 }
 
-export type FrameworkOption = 'vue' | 'react' | 'astro' | 'solid' | 'svelte' | 'slidev';
+export type FrameworkOption = 'vue' | 'nuxt' | 'react' | 'astro' | 'solid' | 'svelte' | 'slidev';
 
 export interface PromptResult {
+  updateJetbrainsIdea: unknown;
   uncommittedConfirmed: boolean;
   frameworks: FrameworkOption[];
   extra: ExtraLibrariesOption[];
   updateVscodeSettings: unknown;
+}
+
+export interface JetbrainsProjectSettings {
+  '?xml': {
+    version: string;
+    encoding: string;
+  };
+  'project': {
+    version: string;
+    component: {
+      'name': string;
+      [p: string]: any;
+      'extra-options'?: { value: string };
+      'work-dir-patterns'?: { value: string };
+      'additional-rules-dir'?: { value: string };
+      'option'?: { name: string; value: string };
+      'custom-configuration-file'?: { path: string; used: 'true' | 'false' };
+    };
+  };
 }

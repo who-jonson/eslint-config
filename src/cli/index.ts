@@ -24,10 +24,22 @@ const instance = yargs(hideBin(process.argv))
         type: 'boolean',
         description: 'Skip prompts and use default values'
       })
+      .option('jetbrains', {
+        default: true,
+        type: 'boolean',
+        alias: ['idea', 'j'],
+        description: 'Configure eslint settings for better Jetbrains IDE. (WebStorm / PhpStorm) experience.'
+      })
+      .option('vscode', {
+        default: true,
+        type: 'boolean',
+        alias: ['c', 'code'],
+        description: 'Add/Update .vscode/settings.json for better VS Code experience.'
+      })
       .option('template', {
         alias: 't',
         type: 'string',
-        description: 'Use the framework template for optimal customization: vue / react / svelte / astro'
+        description: 'Use the framework template for optimal customization: vue / nuxt / react / svelte / astro'
       })
       .option('extra', {
         alias: 'e',
@@ -39,7 +51,7 @@ const instance = yargs(hideBin(process.argv))
     async (args) => {
       header();
       try {
-        await run(args);
+        await run(args as any);
       }
       catch (error) {
         p.log.error(c.inverse(c.red(' Failed to migrate ')));

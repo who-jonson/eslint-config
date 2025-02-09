@@ -1,10 +1,20 @@
 import c from 'picocolors';
 
-import type { PromItem, FrameworkOption, ExtraLibrariesOption } from './types';
+import type { PromItem, FrameworkOption, ExtraLibrariesOption, JetbrainsProjectSettings } from './types';
 
 import pkgJson from '../../package.json';
 
 export { pkgJson };
+
+export const jetbrainsSettingsObj = <JetbrainsProjectSettings> {
+  '?xml': { version: '1.0', encoding: 'UTF-8' },
+  'project': { version: '4', component: {
+    'name': 'EslintConfiguration',
+    'extra-options': { value: '--cache' },
+    'option': { value: 'true', name: 'fix-on-save' },
+    'custom-configuration-file': { used: 'true', path: '$PROJECT_DIR$/eslint.config.js' }
+  } }
+};
 
 export const vscodeSettingsString = `
   // Disable the default formatter, use eslint instead
@@ -64,6 +74,10 @@ export const frameworkOptions: PromItem<FrameworkOption>[] = [
     label: c.green('Vue')
   },
   {
+    value: 'nuxt',
+    label: c.green('Nuxt')
+  },
+  {
     value: 'react',
     label: c.cyan('React')
   },
@@ -103,6 +117,9 @@ export const extra: ExtraLibrariesOption[] = extraOptions.map(({ value }) => (va
 
 export const dependenciesMap = {
   vue: [],
+  nuxt: [
+    '@nuxt/eslint-config'
+  ],
   solid: [
     'eslint-plugin-solid'
   ],
