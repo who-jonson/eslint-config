@@ -2,7 +2,7 @@
   "name": "@whoj/eslint-config",
   "type": "module",
   "version": "2.4.0",
-  "packageManager": "pnpm@10.2.1",
+  "packageManager": "pnpm@10.3.0",
   "description": "ESLint config",
   "license": "MIT",
   "homepage": "https://github.com/who-jonson/eslint-config",
@@ -37,7 +37,7 @@
   "peerDependencies": {
     "@prettier/plugin-xml": "^3.4.1",
     "@unocss/eslint-plugin": ">=0.50.0",
-    "eslint": "^9.19.0",
+    "eslint": "^9.20.0",
     "eslint-plugin-format": ">=0.1.0"
   },
   "peerDependenciesMeta": {
