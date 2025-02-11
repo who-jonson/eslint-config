@@ -50,7 +50,12 @@ export async function updateJetbrainsIdea(result: PromptResult, flatConfigPath: 
 
   await fsp.writeFile(
     ideaFlatConfigPath,
-    getJetbrainsEslintConfigContent(flatConfigPath),
+    getJetbrainsEslintConfigContent(
+      path.relative(
+        path.dirname(ideaFlatConfigPath),
+        flatConfigPath
+      )
+    ),
     'utf8'
   );
   p.log.success(c.green(`Created ${path.relative(cwd, ideaFlatConfigPath)}`));
