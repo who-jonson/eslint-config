@@ -6,7 +6,6 @@ import { whoj } from './src';
 export default whoj(
   {
     vue: true,
-    nuxt: true,
     type: 'lib',
     react: false,
     solid: false,

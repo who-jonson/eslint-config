@@ -36,7 +36,7 @@ export interface CliRunOptions {
   extra?: Array<ExtraLibrariesOption>;
 
   /**
-   * Use the framework template for optimal customization: vue / nuxt / react / svelte / astro
+   * Use the framework template for optimal customization: vue / react / svelte / astro
    */
   frameworks?: Array<FrameworkOption>;
 }

@@ -39,7 +39,7 @@ const instance = yargs(hideBin(process.argv))
       .option('template', {
         alias: 't',
         type: 'string',
-        description: 'Use the framework template for optimal customization: vue / nuxt / react / svelte / astro'
+        description: 'Use the framework template for optimal customization: vue / react / svelte / astro'
       })
       .option('extra', {
         alias: 'e',

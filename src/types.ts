@@ -3,7 +3,6 @@ import type { ParserOptions } from '@typescript-eslint/parser';
 import type { FlatGitignoreOptions } from 'eslint-config-flat-gitignore';
 import type { StylisticCustomizeOptions } from '@stylistic/eslint-plugin';
 import type { Options as VueBlocksOptions } from 'eslint-processor-vue-blocks';
-import type { NuxtESLintConfigOptions, NuxtESLintFeaturesOptions } from '@nuxt/eslint-config/flat';
 
 import type { ConfigNames, RuleOptions } from './typegen';
 import type { VendoredPrettierOptions } from './vender/prettier-types';
@@ -78,10 +77,6 @@ export interface OptionsUnicorn {
    * @default false
    */
   allRecommended?: boolean;
-}
-
-export interface OptionsNuxt<Ex extends keyof NuxtESLintFeaturesOptions = 'stylistic' | 'standalone'> extends Omit<NuxtESLintConfigOptions, 'features'> {
-  features?: Omit<NuxtESLintFeaturesOptions, Ex>;
 }
 
 export interface OptionsUnoCSS extends OptionsOverrides {
@@ -280,13 +275,6 @@ export interface OptionsConfig extends OptionsProjectType, OptionsComponentExts 
    * @default true
    */
   autoRenamePlugins?: boolean;
-
-  /**
-   * Enable Nuxt support.
-   *
-   * @default auto-detect based on the dependencies
-   */
-  nuxt?: boolean | OptionsNuxt;
 
   /**
    * Core rules. Can't be disabled.

@@ -1,7 +1,6 @@
 export * from './jsx';
 export * from './vue';
 export * from './node';
-export * from './nuxt';
 export * from './sort';
 export * from './test';
 export * from './toml';

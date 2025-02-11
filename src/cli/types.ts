@@ -6,7 +6,7 @@ export interface PromItem<T> {
   hint?: string;
 }
 
-export type FrameworkOption = 'vue' | 'nuxt' | 'react' | 'astro' | 'solid' | 'svelte' | 'slidev';
+export type FrameworkOption = 'vue' | 'react' | 'astro' | 'solid' | 'svelte' | 'slidev';
 
 export interface PromptResult {
   updateJetbrainsIdea: unknown;
@@ -26,6 +26,7 @@ export interface JetbrainsProjectSettings {
     component: {
       'name': string;
       [p: string]: any;
+      'files-pattern'?: { value: string };
       'extra-options'?: { value: string };
       'work-dir-patterns'?: { value: string };
       'additional-rules-dir'?: { value: string };

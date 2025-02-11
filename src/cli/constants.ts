@@ -74,10 +74,6 @@ export const frameworkOptions: PromItem<FrameworkOption>[] = [
     label: c.green('Vue')
   },
   {
-    value: 'nuxt',
-    label: c.green('Nuxt')
-  },
-  {
     value: 'react',
     label: c.cyan('React')
   },
@@ -117,9 +113,6 @@ export const extra: ExtraLibrariesOption[] = extraOptions.map(({ value }) => (va
 
 export const dependenciesMap = {
   vue: [],
-  nuxt: [
-    '@nuxt/eslint-config'
-  ],
   solid: [
     'eslint-plugin-solid'
   ],

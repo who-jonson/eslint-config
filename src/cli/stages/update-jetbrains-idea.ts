@@ -27,6 +27,7 @@ export async function updateJetbrainsIdea(result: PromptResult, flatConfigPath: 
     ignoreAttributes: false,
     unpairedTags: [
       'option',
+      'files-pattern',
       'extra-options',
       'work-dir-patterns',
       'additional-rules-dir',

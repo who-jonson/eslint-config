@@ -13,7 +13,6 @@ import {
   jsx,
   vue,
   node,
-  nuxt,
   test,
   toml,
   yaml,
@@ -48,13 +47,6 @@ const flatConfigProps = [
   'rules',
   'settings'
 ] satisfies (keyof TypedFlatConfigItem)[];
-
-const NuxtPackages = [
-  'nuxt',
-  '@nuxt/kit',
-  '@nuxt/schema',
-  '@nuxt/content'
-];
 
 const VuePackages = [
   'vue',
@@ -129,9 +121,8 @@ export function whoj(
     unocss: enableUnoCSS = false,
     unicorn: enableUnicorn = true,
     gitignore: enableGitignore = true,
-    typescript: enableTypeScript = isPackageExists('typescript'),
-    nuxt: enableNuxt = NuxtPackages.some(i => isPackageExists(i)),
-    vue: enableVue = enableNuxt !== false && VuePackages.some(i => isPackageExists(i))
+    vue: enableVue = VuePackages.some(i => isPackageExists(i)),
+    typescript: enableTypeScript = isPackageExists('typescript')
   } = options;
 
   let isInEditor = options.isInEditor;
@@ -357,17 +348,6 @@ export function whoj(
       'no-useless-escape': 'warn'
     }
   }]);
-
-  if (enableNuxt) {
-    const { dirs, features = {} } = resolveSubOptions(options, 'nuxt');
-    configs.unshift(nuxt({
-      dirs,
-      features: {
-        ...features,
-        stylistic: stylisticOptions
-      }
-    }));
-  }
 
   let composer = new FlatConfigComposer<TypedFlatConfigItem, ConfigNames>();
 
