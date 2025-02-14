@@ -7,7 +7,7 @@ import { interopDefault } from '../utils';
 let _pluginTest: any;
 
 export async function test(
-  options: OptionsFiles & OptionsOverrides & OptionsIsInEditor = {}
+  options: OptionsFiles & OptionsIsInEditor & OptionsOverrides = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     overrides = {},

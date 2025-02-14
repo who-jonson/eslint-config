@@ -26,7 +26,7 @@ const NextJsPackages = [
 ];
 
 export async function react(
-  options: OptionsFiles & OptionsOverrides & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions = {}
+  options: OptionsFiles & OptionsOverrides & OptionsTypeScriptParserOptions & OptionsTypeScriptWithTypes = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     tsconfigPath,

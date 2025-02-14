@@ -4,7 +4,7 @@ import { GLOB_SVELTE } from '../globs';
 import { ensurePackages, interopDefault } from '../utils';
 
 export async function svelte(
-  options: OptionsFiles & OptionsOverrides & OptionsStylistic & OptionsHasTypeScript = {}
+  options: OptionsFiles & OptionsHasTypeScript & OptionsOverrides & OptionsStylistic = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     overrides = {},

@@ -85,7 +85,7 @@ export function resolveSubOptions<K extends keyof OptionsConfig>(
 export function getOverrides<K extends keyof OptionsConfig>(
   options: OptionsConfig,
   key: K
-): Partial<RuleOptions & Linter.RulesRecord> {
+): Partial<Linter.RulesRecord & RuleOptions> {
   const sub = resolveSubOptions(options, key);
   return {
     ...(options.overrides as any)?.[key],
@@ -106,7 +106,7 @@ export function getOverrides<K extends keyof OptionsConfig>(
  *  The merged ESLint configurations.
  */
 export function whoj(
-  options: OptionsConfig & Omit<TypedFlatConfigItem, 'files'> = {},
+  options: Omit<TypedFlatConfigItem, 'files'> & OptionsConfig = {},
   ...userConfigs: Awaitable<Linter.Config[] | TypedFlatConfigItem | TypedFlatConfigItem[] | FlatConfigComposer<any, any>>[]
 ): FlatConfigComposer<TypedFlatConfigItem, ConfigNames> {
   const {

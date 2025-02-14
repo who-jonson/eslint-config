@@ -5,14 +5,14 @@ import { whoj } from './src';
 
 export default whoj(
   {
-    vue: true,
-    type: 'lib',
+    astro: false,
+    formatters: true,
     react: false,
     solid: false,
-    astro: false,
     svelte: false,
+    type: 'lib',
     typescript: true,
-    formatters: true
+    vue: true
   },
   {
     ignores: [
@@ -23,7 +23,8 @@ export default whoj(
   {
     files: ['src/**/*.ts'],
     rules: {
-      'perfectionist/sort-objects': 'error'
+      'perfectionist/sort-interfaces': ['error', { order: 'asc', type: 'line-length' }],
+      'perfectionist/sort-objects': ['error', { order: 'asc', type: 'line-length' }]
     }
   },
   {

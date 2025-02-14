@@ -152,31 +152,31 @@ You can configure each integration individually, for example:
 import whoj from '@whoj/eslint-config';
 
 export default whoj({
-  vue: true,
-
-  // Enable stylistic formatting rules
-  // stylistic: true,
-
-  // Type of the project. 'lib' for libraries, the default is 'app'
-  type: 'lib',
-
-  yaml: false,
-  // Disable jsonc and yaml support
-  jsonc: false,
-
-  // TypeScript and Vue are autodetected, you can also explicitly enable them:
-  typescript: true,
   // `.eslintignore` is no longer supported in Flat config, use `ignores` instead
   ignores: [
     '**/fixtures',
     // ...globs
   ],
 
+  // Enable stylistic formatting rules
+  // stylistic: true,
+
+  // Disable jsonc and yaml support
+  jsonc: false,
+
   // Or customize the stylistic rules
   stylistic: {
     indent: 2, // 4, or 'tab'
     quotes: 'single', // or 'double'
   },
+  // Type of the project. 'lib' for libraries, the default is 'app'
+  type: 'lib',
+
+  // TypeScript and Vue are autodetected, you can also explicitly enable them:
+  typescript: true,
+  vue: true,
+
+  yaml: false,
 });
 ```
 
@@ -194,8 +194,8 @@ export default whoj(
   // From the second arguments they are ESLint Flat Configs
   // you can have multiple configs
   {
-    rules: {},
     files: ['**/*.ts'],
+    rules: {},
   },
   {
     rules: {},

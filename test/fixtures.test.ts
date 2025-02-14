@@ -14,29 +14,29 @@ afterAll(async () => {
 });
 
 runWithConfig('js', {
-  vue: false,
-  typescript: false
+  typescript: false,
+  vue: false
 });
 runWithConfig('all', {
-  vue: true,
   astro: true,
   svelte: true,
-  typescript: true
+  typescript: true,
+  vue: true
 });
 runWithConfig('no-style', {
-  vue: true,
+  stylistic: false,
   typescript: true,
-  stylistic: false
+  vue: true
 });
 runWithConfig(
   'tab-double-quotes',
   {
-    vue: true,
-    typescript: true,
     stylistic: {
       indent: 'tab',
       quotes: 'double'
-    }
+    },
+    typescript: true,
+    vue: true
   },
   {
     rules: {
@@ -92,22 +92,22 @@ runWithConfig(
 runWithConfig(
   'with-formatters',
   {
-    vue: true,
     astro: true,
+    formatters: true,
     typescript: true,
-    formatters: true
+    vue: true
   }
 );
 
 runWithConfig(
   'no-markdown-with-formatters',
   {
-    jsx: false,
-    vue: false,
-    markdown: false,
     formatters: {
       markdown: true
-    }
+    },
+    jsx: false,
+    markdown: false,
+    vue: false
   }
 );
 

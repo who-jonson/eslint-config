@@ -13,7 +13,7 @@ import { GLOB_VUE } from '../globs';
 import { interopDefault } from '../utils';
 
 export async function vue(
-  options: OptionsVue & OptionsFiles & OptionsOverrides & OptionsStylistic & OptionsHasTypeScript = {}
+  options: OptionsFiles & OptionsHasTypeScript & OptionsOverrides & OptionsStylistic & OptionsVue = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     overrides = {},

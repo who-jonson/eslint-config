@@ -11,7 +11,7 @@ export const StylisticConfigDefaults: StylisticConfig = {
   commaDangle: 'never'
 };
 
-export interface StylisticOptions extends StylisticConfig, OptionsOverrides {
+export interface StylisticOptions extends OptionsOverrides, StylisticConfig {
   lessOpinionated?: boolean;
 }
 

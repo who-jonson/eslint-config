@@ -141,7 +141,7 @@ export interface OptionsTypeScriptParserOptions {
   parserOptions?: Partial<ParserOptions>;
 }
 
-export type TypedFlatConfigItem = Omit<Linter.Config<Rules & Linter.RulesRecord>, 'plugins'> & {
+export type TypedFlatConfigItem = Omit<Linter.Config<Linter.RulesRecord & Rules>, 'plugins'> & {
   // Relax plugins type limitation, as most of the plugins did not have correct type info yet.
   /**
    * An object containing a name-value mapping of plugin names to plugin objects. When `files` is specified, these plugins are only available to the matching files.
@@ -225,7 +225,7 @@ export interface OptionsFormatters {
   };
 }
 
-export interface OptionsConfig extends OptionsProjectType, OptionsComponentExts {
+export interface OptionsConfig extends OptionsComponentExts, OptionsProjectType {
   /**
    * Enable JSX related rules.
    *
@@ -406,7 +406,7 @@ export interface OptionsConfig extends OptionsProjectType, OptionsComponentExts 
    * @see https://ota-meshi.github.io/eslint-plugin-regexp/
    * @default true
    */
-  regexp?: boolean | (OptionsRegExp & OptionsOverrides);
+  regexp?: boolean | (OptionsOverrides & OptionsRegExp);
 
   /**
    * Enable stylistic rules.
@@ -414,7 +414,7 @@ export interface OptionsConfig extends OptionsProjectType, OptionsComponentExts 
    * @see https://eslint.style/
    * @default true
    */
-  stylistic?: boolean | (StylisticConfig & OptionsOverrides);
+  stylistic?: boolean | (OptionsOverrides & StylisticConfig);
 
   /**
    * Provide overrides for rules for each integration.

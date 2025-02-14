@@ -15,7 +15,7 @@ import { renameRules, interopDefault } from '../utils';
 import { GLOB_TS, GLOB_TSX, GLOB_ASTRO_TS, GLOB_MARKDOWN } from '../globs';
 
 export async function typescript(
-  options: OptionsFiles & OptionsOverrides & OptionsProjectType & OptionsComponentExts & OptionsTypeScriptWithTypes & OptionsTypeScriptParserOptions = {}
+  options: OptionsComponentExts & OptionsFiles & OptionsOverrides & OptionsProjectType & OptionsTypeScriptParserOptions & OptionsTypeScriptWithTypes = {}
 ): Promise<TypedFlatConfigItem[]> {
   const {
     type = 'app',
